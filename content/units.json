@@ -3,29 +3,52 @@
     "booking_name": "Haven Bay 1",
     "min_stay": 2,
     "max_guests": 2,
-    "amenities": ["sea_view", "terrace", "kitchen", "washer", "wifi"],
-    "hero": "studio-view.jpg",
+    "amenities": [
+      "sea_view",
+      "terrace",
+      "kitchen",
+      "washer",
+      "wifi"
+    ],
+    "hero": "studio-01.jpg",
     "photos": [
-      "studio-view.jpg",
-      "studio-kitchen.jpg",
-      "studio-sofa.jpg",
-      "studio-sofa-grey.jpg",
-      "studio-washer.jpg",
-      "studio-shower.jpg"
+      "studio-01.jpg",
+      "studio-02.jpg",
+      "studio-03.jpg",
+      "studio-04.jpg",
+      "studio-05.jpg",
+      "studio-06.jpg",
+      "studio-07.jpg",
+      "studio-08.jpg",
+      "studio-09.jpg",
+      "studio-10.jpg"
     ]
   },
   "apartment": {
     "booking_name": "Haven Bay 2",
     "min_stay": 2,
     "max_guests": 4,
-    "amenities": ["sea_view", "terrace", "kitchen", "bedroom", "wifi"],
-    "hero": "apartment-1.jpg",
+    "amenities": [
+      "sea_view",
+      "terrace",
+      "kitchen",
+      "bedroom",
+      "wifi"
+    ],
+    "hero": "apartment-01.jpg",
     "photos": [
-      "apartment-1.jpg",
-      "apartment-entrance.jpg",
-      "apartment-sofa.jpg",
-      "apartment-4.jpg",
-      "apartment-5.jpg"
+      "apartment-01.jpg",
+      "apartment-02.jpg",
+      "apartment-03.jpg",
+      "apartment-04.jpg",
+      "apartment-05.jpg",
+      "apartment-06.jpg",
+      "apartment-07.jpg",
+      "apartment-08.jpg",
+      "apartment-09.jpg",
+      "apartment-10.jpg",
+      "apartment-11.jpg",
+      "apartment-12.jpg"
     ]
   },
   "_hinweis": "max_guests, Ausstattung und Zuordnung der Fotos sind Annahmen und müssen geprüft werden."

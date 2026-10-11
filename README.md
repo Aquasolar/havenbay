@@ -59,7 +59,22 @@ Die Links gehören nur in Secrets, nie in das Repository. Auf der Website ersche
 
 ## Fotos
 
-Bilder nach `site/assets/img/` legen (Dateinamen siehe `content/units.json`, zusätzlich `hero-bay.jpg`, `bay-2.jpg`). Fehlende Bilder zeigen einen Farbverlauf. Nur Fotos verwenden, an denen du die Rechte hast.
+Quelle: Google Drive, `Immobilien/Rogotin Primorska 14A/HavenBay/Fotos/WebSite` und `Things to do`. Für das Web verkleinert (max. 1600 px) in `site/assets/img/`:
+
+| Datei | Inhalt |
+|---|---|
+| `hero-bay.jpg` | Drohnenfoto der Bucht (Titelbild) |
+| `bay-2.jpg` | Sonnenuntergang (Abschnitt „Location“) |
+| `studio-01..10.jpg` | Studio (Haven Bay 1), Reihenfolge = Galerie, Nr. 1 = Vorschaubild |
+| `apartment-01..12.jpg` | Apartment (Haven Bay 2) |
+| `todo/<id>.jpg` | Bild zum Eintrag mit gleicher `id` in `things-to-do.json` |
+
+Austauschen: Datei mit gleichem Namen überschreiben. Neue Fotos: in `content/units.json` unter `photos` eintragen. Fehlende Bilder zeigen einen Farbverlauf.
+
+Hinweise:
+- Die Zuordnung zu Studio/Apartment stammt aus den Dateinamen (A1 = Studio, A2 = Apartment) und dem Raumeindruck. Bitte prüfen. Zwei Dateien tragen „A2“, zeigen aber den Raum des Studios (`Apartment A2.jpg`, `orange Couch aufgebettet A2.jpg`) und wurden nicht verwendet.
+- Nicht verwendet: Fotos mit erkennbaren Personen sowie Bilder mit KI-artigen Dateinamen (z. B. „Helles Wohnzimmer mit Meerblick und Sonnenuntergang“), die Dubletten echter Fotos zu sein scheinen. Gästen sollten nur echte Fotos der Unterkunft gezeigt werden.
+- Bilder von Restaurants/Webseiten Dritter (WhatsApp, .webp) sind nicht übernommen, solange die Rechte nicht geklärt sind.
 
 ## Veröffentlichen mit havenbay.eu
 
