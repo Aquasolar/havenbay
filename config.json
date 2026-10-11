@@ -1,0 +1,25 @@
+{
+  "base_url": "https://www.havenbay.eu",
+  "languages": ["en", "de", "hr", "cs", "hu", "pl", "it", "sl"],
+  "default_language": "en",
+  "language_names": {
+    "en": "English",
+    "de": "Deutsch",
+    "hr": "Hrvatski",
+    "cs": "Čeština",
+    "hu": "Magyar",
+    "pl": "Polski",
+    "it": "Italiano",
+    "sl": "Slovenščina"
+  },
+  "contact_email": "",
+  "contact_phone": "",
+  "form_endpoint": "",
+  "operator": {
+    "name": "Mediterranean Residence d.o.o.",
+    "address": "Primorska cesta 14a, 20343 Rogotin, Croatia",
+    "oib": "67638718963",
+    "register": "",
+    "director": ""
+  }
+}

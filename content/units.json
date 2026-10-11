@@ -1,0 +1,32 @@
+{
+  "studio": {
+    "booking_name": "Haven Bay 1",
+    "min_stay": 2,
+    "max_guests": 2,
+    "amenities": ["sea_view", "terrace", "kitchen", "washer", "wifi"],
+    "hero": "studio-view.jpg",
+    "photos": [
+      "studio-view.jpg",
+      "studio-kitchen.jpg",
+      "studio-sofa.jpg",
+      "studio-sofa-grey.jpg",
+      "studio-washer.jpg",
+      "studio-shower.jpg"
+    ]
+  },
+  "apartment": {
+    "booking_name": "Haven Bay 2",
+    "min_stay": 2,
+    "max_guests": 4,
+    "amenities": ["sea_view", "terrace", "kitchen", "bedroom", "wifi"],
+    "hero": "apartment-1.jpg",
+    "photos": [
+      "apartment-1.jpg",
+      "apartment-entrance.jpg",
+      "apartment-sofa.jpg",
+      "apartment-4.jpg",
+      "apartment-5.jpg"
+    ]
+  },
+  "_hinweis": "max_guests, Ausstattung und Zuordnung der Fotos sind Annahmen und müssen geprüft werden."
+}

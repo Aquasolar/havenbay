@@ -1,0 +1,39 @@
+{
+  "_hinweis": "ENTWURF. Rechtstexte müssen vor der Veröffentlichung von der Steuerberatung oder einer Rechtsberatung geprüft werden. Fehlende Angaben stehen in eckigen Klammern.",
+  "en": {
+    "title": "Legal notice and privacy",
+    "imprint_h": "Legal notice",
+    "imprint_labels": {"operator": "Operator", "address": "Address", "oib": "OIB (tax ID)", "register": "Commercial register", "director": "Managing director", "email": "Email", "phone": "Phone"},
+    "privacy_h": "Privacy",
+    "privacy_p": [
+      "This website does not use cookies for tracking and loads no third-party fonts, analytics or maps.",
+      "If you send a booking request, we process the details you enter (name, email, phone, travel dates, message) only to answer your request and to prepare a possible booking. The data is sent by email and stored in our booking records. We delete it when it is no longer needed and legal retention periods have ended.",
+      "You can ask us for access, correction or deletion of your data at any time, and you can complain to your data protection authority.",
+      "The availability calendar is created from the booking calendars of our listings. No guest data is shown."
+    ]
+  },
+  "de": {
+    "title": "Impressum und Datenschutz",
+    "imprint_h": "Impressum",
+    "imprint_labels": {"operator": "Betreiber", "address": "Adresse", "oib": "OIB (Steuernummer)", "register": "Handelsregister", "director": "Geschäftsführung", "email": "E-Mail", "phone": "Telefon"},
+    "privacy_h": "Datenschutz",
+    "privacy_p": [
+      "Diese Website verwendet keine Cookies zu Trackingzwecken und lädt keine Schriftarten, Analysedienste oder Karten von Dritten.",
+      "Wenn Sie eine Buchungsanfrage senden, verarbeiten wir Ihre Angaben (Name, E-Mail, Telefon, Reisedaten, Nachricht) nur, um Ihre Anfrage zu beantworten und eine mögliche Buchung vorzubereiten. Die Daten werden per E-Mail übermittelt und in unseren Buchungsunterlagen gespeichert. Wir löschen sie, sobald sie nicht mehr benötigt werden und gesetzliche Aufbewahrungsfristen abgelaufen sind.",
+      "Sie können jederzeit Auskunft, Berichtigung oder Löschung Ihrer Daten verlangen und sich bei Ihrer Datenschutzbehörde beschweren.",
+      "Der Verfügbarkeitskalender wird aus den Buchungskalendern unserer Inserate erstellt. Es werden keine Gästedaten angezeigt."
+    ]
+  },
+  "hr": {
+    "title": "Impressum i privatnost",
+    "imprint_h": "Impressum",
+    "imprint_labels": {"operator": "Voditelj", "address": "Adresa", "oib": "OIB", "register": "Sudski registar", "director": "Direktor", "email": "E-pošta", "phone": "Telefon"},
+    "privacy_h": "Zaštita privatnosti",
+    "privacy_p": [
+      "Ova web stranica ne koristi kolačiće za praćenje i ne učitava fontove, analitiku ni karte trećih strana.",
+      "Ako pošaljete upit za rezervaciju, obrađujemo podatke koje unesete (ime, e-pošta, telefon, datumi putovanja, poruka) samo radi odgovora na upit i pripreme moguće rezervacije. Podaci se šalju e-poštom i pohranjuju u našoj evidenciji rezervacija. Brišemo ih kada više nisu potrebni i kada isteknu zakonski rokovi čuvanja.",
+      "U bilo kojem trenutku možete zatražiti pristup, ispravak ili brisanje svojih podataka te podnijeti pritužbu nadležnom tijelu za zaštitu podataka.",
+      "Kalendar dostupnosti izrađuje se iz kalendara rezervacija naših oglasa. Podaci o gostima se ne prikazuju."
+    ]
+  }
+}
