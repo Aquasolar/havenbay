@@ -274,6 +274,35 @@ def tail(site, lang, ui, with_data=True):
 
 
 # --------------------------------------------------------------------------- Seiten
+def current_nightly(site, unit):
+    from datetime import date
+    v = site.prices["units"][unit]["nightly"].get(str(date.today().month))
+    return v if isinstance(v, (int, float)) else None
+
+
+def rates_section(site, ui):
+    cards = []
+    for u in UNITS:
+        now = current_nightly(site, u)
+        now_t = f'{site.currency} {now}' if now is not None else esc(ui["on_request"])
+        per = f' <span>{esc(ui["per_night"])}</span>' if now is not None else ""
+        cards.append(f"""<article class="rate">
+<h3>{esc(ui[u + "_name"])}</h3>
+<p class="rate-label">{esc(ui["rate_now"])}</p>
+<p class="rate-price">{now_t}{per}</p>
+<p class="rate-label">{esc(ui["monthly_h"])}</p>
+<p class="rate-price">{esc(monthly_text(site, ui, u))}</p>
+</article>""")
+    return f"""<section class="section-tight rates" aria-labelledby="rates-h">
+<div class="wrap">
+<h2 id="rates-h">{esc(ui["rates_h"])}</h2>
+<p class="muted">{esc(ui["monthly_p"])} {esc(ui["direct_note"])}</p>
+<div class="rate-grid">{''.join(cards)}</div>
+<a class="btn" href="#booking">{esc(ui["btn_check"])}</a>
+</div>
+</section>"""
+
+
 def page_index(site, lang):
     ui = site.ui_for(lang)
     opts = "".join(f'<option value="{u}">{esc(ui[u + "_name"])}</option>' for u in UNITS)
@@ -304,12 +333,7 @@ def page_index(site, lang):
 {header(site, lang, "index", ui)}
 <main id="main">
 {hero(site, lang, ui, "hero-bay.jpg", ui["hero_h"], ui["hero_p"])}
-<div class="strip"><div class="wrap"><div class="strip-box">
-<div><label for="strip-unit">{esc(ui["f_unit"])}</label><select id="strip-unit" class="field">{opts}</select></div>
-<div><label for="strip-guests">{esc(ui["f_guests"])}</label><select id="strip-guests" class="field">{gopts}</select></div>
-<div><a id="strip-go" class="btn" href="#booking">{esc(ui["btn_check"])}</a></div>
-<p class="note">{esc(ui["direct_note"])}</p>
-</div></div></div>
+{rates_section(site, ui)}
 <section class="section" aria-labelledby="units-h">
 <div class="wrap">
 <h2 id="units-h">{esc(ui["units_h"])}</h2>
@@ -542,10 +566,7 @@ REDIRECT = """<!doctype html>
 {robots}<link rel="canonical" href="{canonical}">
 <script>
 (function () {{
-  var sup = {langs};
-  var pref = (navigator.languages || [navigator.language || "en"]).map(function (x) {{ return String(x).slice(0, 2).toLowerCase(); }});
-  var l = pref.filter(function (x) {{ return sup.indexOf(x) > -1; }})[0] || "{default}";
-  location.replace(l + "/{target}");
+  location.replace("{default}/{target}");
 }})();
 </script>
 <style>body{{font-family:system-ui,sans-serif;margin:3rem auto;max-width:30rem;padding:0 1rem;color:#0f3f4a}}a{{margin-right:1rem}}</style>

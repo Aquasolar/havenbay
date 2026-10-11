@@ -250,3 +250,14 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .draft-banner { position: relative; z-index: 30; }
 body:has(.draft-banner) { --banner-h: 2.1rem; }
 @media (max-width: 40rem) { body:has(.draft-banner) { --banner-h: 3.6rem; } }
+
+/* Startseite: Hero ohne überlagerte Buchungsleiste, danach Preise */
+.is-home .hero { min-height: min(70svh, 40rem); }
+.is-home .hero-inner { padding-bottom: 3rem; }
+.rates .wrap > .btn { margin-top: 1.4rem; }
+.rate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.2rem; margin-top: 1.2rem; }
+.rate { border-top: 3px solid var(--lagoon); padding-top: 0.8rem; min-width: 0; }
+.rate h3 { margin-bottom: 0.6rem; }
+.rate-label { margin: 0.7rem 0 0; font-size: var(--step--1); color: var(--dusk); }
+.rate-price { margin: 0; font-size: var(--step-2); font-weight: 700; color: var(--lagoon); font-variant-numeric: tabular-nums; }
+.rate-price span { font-size: var(--step--1); font-weight: 400; color: var(--dusk); }
