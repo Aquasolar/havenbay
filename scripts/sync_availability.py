@@ -99,12 +99,15 @@ def parse_date_any(v):
 
 def parse_price_csv(text):
     """Tabelle mit Spalten: von, bis (optional), studio, apartment, bezeichnung (optional).
-    Gilt je Nacht von..bis (beide inklusive). Leere Preise werden ignoriert."""
+    Gilt je Nacht von..bis (beide inklusive). Leere Preise werden ignoriert.
+    Spalte status: Zeilen mit status=vorschlag werden übersprungen."""
     units = {"studio": {}, "apartment": {}}
     events = []
     rdr = csv.DictReader(io.StringIO(text))
     rows = [{(k or "").strip().lower(): (v or "").strip() for k, v in r.items()} for r in rdr]
     for r in rows:
+        if r.get("status", "").lower() in ("vorschlag", "vorschläge", "entwurf", "draft"):
+            continue  # Bot-Vorschläge erscheinen erst nach Freigabe
         a = parse_date_any(r.get("von") or r.get("from") or r.get("datum") or r.get("date"))
         if not a:
             continue

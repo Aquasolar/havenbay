@@ -61,6 +61,12 @@ class T2(unittest.TestCase):
         self.assertNotIn("2027-09-01", d["units"]["apartment"])
         self.assertEqual(d["events"], [{"from": "2027-08-13", "to": "2027-08-15", "label": "Lada Marathon"}])
 
+    def test_price_csv_skips_proposals(self):
+        txt = "von,bis,studio,apartment,bezeichnung,status\n2027-05-01,,70,80,,vorschlag\n2027-05-02,,71,81,,freigegeben\n"
+        d = s.parse_price_csv(txt)
+        self.assertNotIn("2027-05-01", d["units"]["studio"])
+        self.assertEqual(d["units"]["studio"]["2027-05-02"], 71)
+
     def test_ical_blocks_no_guest_data(self):
         out = s.ical_blocks([(date(2027, 1, 13), date(2027, 1, 14))], "studio")
         self.assertIn("DTSTART;VALUE=DATE:20270113", out)

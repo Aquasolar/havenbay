@@ -67,7 +67,7 @@ Inhalt ändern: `content/guest.json` (WLAN, Telefonnummern, Zeiten oben; Texte j
 
 Preise pro Nacht lassen sich für einzelne Tage oder Zeiträume festlegen (z. B. Lada-Marathon). Sie gehen vor den Monatspreisen aus `content/prices.json`.
 
-1. Google-Tabelle anlegen mit den Spalten `von`, `bis`, `studio`, `apartment`, `bezeichnung` (Datum als `13.08.2027` oder `2027-08-13`; `bis` leer = ein Tag; Preis leer = Monatspreis gilt; `bis` und Preise gelten je Nacht, `bis` inklusive).
+1. Google-Tabelle „Haven Bay Tagespreise“ (Blatt `Tagespreise`, Blatt `Regeln` mit Mindestpreisen) mit den Spalten `von`, `bis`, `studio`, `apartment`, `bezeichnung`, `status` (Zeilen mit `vorschlag` erscheinen nicht auf der Website, erst nach Freigabe) (Datum als `13.08.2027` oder `2027-08-13`; `bis` leer = ein Tag; Preis leer = Monatspreis gilt; `bis` und Preise gelten je Nacht, `bis` inklusive).
 2. Datei > Im Web veröffentlichen > Blatt als CSV. Den Link als Secret `PRICES_CSV_URL` eintragen.
 3. Die Seite liest die Tabelle stündlich. Zeiträume mit Bezeichnung erscheinen auf den Unterseiten unter „Special dates“. Monatspreise ab 28 Nächten bleiben unverändert.
 
