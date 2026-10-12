@@ -2,7 +2,7 @@
   "studio": {
     "booking_name": "Haven Bay 1",
     "min_stay": 2,
-    "max_guests": 2,
+    "max_guests": 3,
     "amenities": [
       "sea_view",
       "terrace",

@@ -5,19 +5,43 @@
   "units": {
     "studio": {
       "nightly": {
-        "1": null, "2": null, "3": null, "4": null,
-        "5": 65, "6": 80, "7": 110, "8": 120, "9": 75, "10": 60,
-        "11": null, "12": null
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": 65,
+        "6": 80,
+        "7": 110,
+        "8": 120,
+        "9": 75,
+        "10": 60,
+        "11": null,
+        "12": null
       },
-      "monthly": { "price": null, "valid_until": "2027-05-31" }
+      "monthly": {
+        "price": 620,
+        "valid_until": "2027-05-31"
+      }
     },
     "apartment": {
       "nightly": {
-        "1": null, "2": null, "3": null, "4": null,
-        "5": 75, "6": 95, "7": 130, "8": 140, "9": 90, "10": 70,
-        "11": null, "12": null
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": 75,
+        "6": 95,
+        "7": 130,
+        "8": 140,
+        "9": 90,
+        "10": 70,
+        "11": null,
+        "12": null
       },
-      "monthly": { "price": null, "valid_until": "2027-05-31" }
+      "monthly": {
+        "price": 690,
+        "valid_until": "2027-05-31"
+      }
     }
   }
 }
