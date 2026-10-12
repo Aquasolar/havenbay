@@ -1,47 +1,66 @@
 {
   "currency": "EUR",
   "confirmed": false,
-  "_hinweis": "PLATZHALTER. Die Nachtpreise Mai bis Oktober stammen aus der Preisstrategie 2026 (untere Airbnb-Spanne). Aktuelle Preise aus dem Preisvergleich und Monatspreise eintragen, dann confirmed auf true setzen. null bedeutet: auf Anfrage.",
+  "_hinweis": "Basis: Airbnb-Einstellungen (Basispreis Winter, Vor-/Nachsaison +50 %, Hochsaison +100 %). Die Saisonzeiträume sind ANNAHMEN (Mai/Juni Vorsaison, Juli/August Hochsaison, Sept/Okt Nachsaison, Nov–Apr Winter) und müssen mit Airbnb abgeglichen werden. Dann confirmed auf true setzen. null bedeutet: auf Anfrage.",
   "units": {
     "studio": {
       "nightly": {
-        "1": null,
-        "2": null,
-        "3": null,
-        "4": null,
-        "5": 65,
-        "6": 80,
-        "7": 110,
-        "8": 120,
-        "9": 75,
-        "10": 60,
-        "11": null,
-        "12": null
+        "1": 59,
+        "2": 59,
+        "3": 59,
+        "4": 59,
+        "5": 89,
+        "6": 89,
+        "7": 118,
+        "8": 118,
+        "9": 89,
+        "10": 89,
+        "11": 59,
+        "12": 59
       },
       "monthly": {
         "price": 620,
         "valid_until": "2027-05-31"
-      }
+      },
+      "base": 59
     },
     "apartment": {
       "nightly": {
-        "1": null,
-        "2": null,
-        "3": null,
-        "4": null,
-        "5": 75,
-        "6": 95,
-        "7": 130,
-        "8": 140,
-        "9": 90,
-        "10": 70,
-        "11": null,
-        "12": null
+        "1": 62,
+        "2": 62,
+        "3": 62,
+        "4": 62,
+        "5": 93,
+        "6": 93,
+        "7": 124,
+        "8": 124,
+        "9": 93,
+        "10": 93,
+        "11": 62,
+        "12": 62
       },
       "monthly": {
         "price": 690,
         "valid_until": "2027-05-31"
-      }
+      },
+      "base": 62
     }
+  },
+  "rules": {
+    "cleaning_fee": 30,
+    "extra_guest_fee": 12,
+    "extra_guest_from": 3,
+    "weekly_from_nights": 7,
+    "weekly_discount_winter": 30,
+    "weekly_discount_season": 10,
+    "winter_months": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "winter_min_nights": 7
   }
 }

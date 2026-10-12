@@ -24,22 +24,42 @@
     for (var t = toUTC(inD); t < toUTC(outD); t += DAY) if (blocked[fromUTC(t)]) return false;
     return true;
   }
-  // Preis: pro Nacht nach Monat; ab 28 Nächten Monatspreis (pro 30 Nächte), wenn gültig und gesetzt.
-  function quote(unit, inD, outD) {
+  // Winter laut Regeln? (nach Anreisemonat)
+  function isWinter(rules, inD) {
+    return !!(rules && rules.winter_months && rules.winter_months.indexOf(Number(inD.slice(5, 7))) >= 0);
+  }
+  // Mindestaufenthalt: im Winter ggf. länger
+  function minStay(unit, inD) {
+    var r = unit.rules;
+    if (r && r.winter_min_nights && isWinter(r, inD)) return Math.max(unit.min_stay || 1, r.winter_min_nights);
+    return unit.min_stay || 1;
+  }
+  // Preis: pro Nacht nach Monat oder Tagespreis; ab 28 Nächten Monatspreis (pro 30 Nächte), wenn gültig;
+  // Wochenrabatt ab 7 Nächten; dazu Reinigung und Zusatzgäste (ab dem 3. Gast pro Nacht).
+  function quote(unit, inD, outD, guests) {
     var nights = nightsBetween(inD, outD);
-    var m = unit.monthly;
+    var r = unit.rules || {};
+    var cleaning = r.cleaning_fee || 0;
+    var extra = 0;
+    if (r.extra_guest_fee && guests >= (r.extra_guest_from || 3)) extra = (guests - (r.extra_guest_from || 3) + 1) * r.extra_guest_fee * nights;
+    var m = unit.monthly, base, discount = 0, mode;
     if (nights >= 28 && m && typeof m.price === 'number' && outD <= addDays(m.valid_until, 1)) {
-      return { nights: nights, total: Math.round(m.price * nights / 30), mode: 'monthly' };
+      base = Math.round(m.price * nights / 30); mode = 'monthly';
+    } else {
+      base = 0; mode = 'nightly';
+      for (var t = toUTC(inD); t < toUTC(outD); t += DAY) {
+        var month = String(new Date(t).getUTCMonth() + 1);
+        var p = unit.nightly ? unit.nightly[month] : null;
+        if (unit.daily && typeof unit.daily[fromUTC(t)] === 'number') p = unit.daily[fromUTC(t)];
+        if (typeof p !== 'number') return { nights: nights, total: null, mode: 'request' };
+        base += p;
+      }
+      if (r.weekly_from_nights && nights >= r.weekly_from_nights) {
+        var pct = isWinter(r, inD) ? r.weekly_discount_winter : r.weekly_discount_season;
+        discount = Math.round(base * (pct || 0) / 100);
+      }
     }
-    var total = 0;
-    for (var t = toUTC(inD); t < toUTC(outD); t += DAY) {
-      var month = String(new Date(t).getUTCMonth() + 1);
-      var p = unit.nightly ? unit.nightly[month] : null;
-      if (unit.daily && typeof unit.daily[fromUTC(t)] === 'number') p = unit.daily[fromUTC(t)];
-      if (typeof p !== 'number') return { nights: nights, total: null, mode: 'request' };
-      total += p;
-    }
-    return { nights: nights, total: total, mode: 'nightly' };
+    return { nights: nights, total: base - discount + cleaning + extra, mode: mode, base: base, discount: discount, cleaning: cleaning, extra: extra };
   }
   function plural(forms, lang, n) {
     var cat = 'other';
@@ -48,7 +68,7 @@
     return s.replace('{n}', n);
   }
 
-  var api = { toUTC: toUTC, fromUTC: fromUTC, addDays: addDays, nightsBetween: nightsBetween, blockedSet: blockedSet, rangeFree: rangeFree, quote: quote, plural: plural };
+  var api = { toUTC: toUTC, fromUTC: fromUTC, addDays: addDays, nightsBetween: nightsBetween, blockedSet: blockedSet, rangeFree: rangeFree, quote: quote, minStay: minStay, isWinter: isWinter, plural: plural };
   if (typeof module !== 'undefined' && module.exports) { module.exports = api; return; }
 
   /* ---------- Browser ---------- */
@@ -211,8 +231,9 @@
         if (!rangeFree(state.blocked, state.start, s)) {
           setHint(ui.range_blocked, true);
           state.start = state.blocked[s] ? null : s; state.end = null;
-        } else if (nightsBetween(state.start, s) < u.min_stay) {
-          setHint(fmt(ui.min_stay, { nights: plural(ui.nights, lang, u.min_stay) }), true);
+        } else if (nightsBetween(state.start, s) < minStay(u, state.start)) {
+          var ms = minStay(u, state.start);
+          setHint(fmt(ui.min_stay, { nights: plural(ui.nights, lang, ms) }), true);
         } else {
           state.end = s;
         }
@@ -254,13 +275,14 @@
       onDay(b.dataset.date);
     });
     unitSel.addEventListener('change', function () { changeUnit(unitSel.value); });
+    guestsSel.addEventListener('change', renderSummary);
     clearBtn.addEventListener('click', clear);
 
     // Leiste im Hero (Startseite)
     var stripUnit = $('#strip-unit'), stripGuests = $('#strip-guests'), stripGo = $('#strip-go');
     if (stripUnit) {
       stripUnit.addEventListener('change', function () { changeUnit(stripUnit.value); });
-      stripGuests.addEventListener('change', function () { guestsSel.value = stripGuests.value; });
+      stripGuests.addEventListener('change', function () { guestsSel.value = stripGuests.value; renderSummary(); });
       stripGo.addEventListener('click', function (e) {
         e.preventDefault();
         bookingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -279,7 +301,7 @@
         name: form.elements.name.value, email: form.elements.email.value, phone: form.elements.phone.value,
         message: form.elements.message.value, lang: lang, page: root.location.href
       };
-      var q = quote(unitCfg(), state.start, state.end);
+      var q = quote(unitCfg(), state.start, state.end, Number(guestsSel.value) || 1);
       payload.estimate = q.total == null ? '' : String(q.total);
       sendBtn.disabled = true; msgEl.className = 'form-msg'; msgEl.textContent = '';
 

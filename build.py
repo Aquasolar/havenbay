@@ -252,6 +252,7 @@ def page_data(site, lang, ui):
             "max_guests": cfg["max_guests"],
             "nightly": pr["nightly"],
             "monthly": pr["monthly"],
+            "rules": site.prices.get("rules", {}),
         }
     data = {
         "lang": lang,
@@ -307,6 +308,7 @@ def rates_section(site, ui):
 <h2 id="rates-h">{esc(ui["rates_h"])}</h2>
 <p class="muted">{esc(ui["monthly_p"])} {esc(ui["direct_note"])}</p>
 <div class="rate-grid">{''.join(cards)}</div>
+<p class="muted">{fees_text(site, ui)}</p>
 <a class="btn" href="#booking">{esc(ui["btn_check"])}</a>
 </div>
 </section>"""
@@ -378,6 +380,15 @@ def amenity_list(ui, cfg):
     return f'<ul class="amen">{items}</ul>'
 
 
+def fees_text(site, ui):
+    r = site.prices.get("rules")
+    if not r:
+        return ""
+    c = site.currency
+    return esc(ui["fees_p"].format(c=f'{c} {r["cleaning_fee"]}', e=f'{c} {r["extra_guest_fee"]}',
+               w=r["weekly_discount_winter"], s=r["weekly_discount_season"], n=r["winter_min_nights"]))
+
+
 def monthly_text(site, ui, unit):
     m = site.prices["units"][unit]["monthly"]
     if isinstance(m.get("price"), (int, float)):
@@ -413,6 +424,7 @@ def page_unit(site, lang, unit):
 <h3>{esc(ui["monthly_h"])}</h3>
 <p>{esc(ui["monthly_p"])}</p>
 <p><strong>{esc(monthly_text(site, ui, unit))}</strong></p>
+<p class="muted">{fees_text(site, ui)}</p>
 </div>
 </div>
 </section>

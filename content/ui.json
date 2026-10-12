@@ -90,7 +90,11 @@
     "direct_note": "Direct booking: no platform fees, personal confirmation.",
     "rates_h": "Rates",
     "rate_now": "Current price per night",
-    "special_h": "Special dates"
+    "special_h": "Special dates",
+    "fees_p": "Cleaning fee {c} per stay. Extra guests (from the 3rd guest): {e} per person and night. Weekly discount from 7 nights: {w}% in winter, {s}% in season. Minimum stay in winter: {n} nights.",
+    "part_cleaning": "Cleaning fee {v}",
+    "part_discount": "Discount −{v}",
+    "part_extra": "Extra guests {v}"
   },
   "de": {
     "skip": "Zum Inhalt springen",
@@ -183,7 +187,11 @@
     "direct_note": "Direktbuchung: ohne Plattformgebühren, persönliche Bestätigung.",
     "rates_h": "Preise",
     "rate_now": "Aktueller Preis pro Nacht",
-    "special_h": "Besondere Termine"
+    "special_h": "Besondere Termine",
+    "fees_p": "Reinigungsgebühr {c} pro Aufenthalt. Zusätzliche Gäste (ab dem 3. Gast): {e} pro Person und Nacht. Wochenrabatt ab 7 Nächten: {w} % im Winter, {s} % in der Saison. Mindestaufenthalt im Winter: {n} Nächte.",
+    "part_cleaning": "Reinigung {v}",
+    "part_discount": "Rabatt −{v}",
+    "part_extra": "Zusatzgäste {v}"
   },
   "hr": {
     "skip": "Preskoči na sadržaj",
@@ -277,7 +285,11 @@
     "direct_note": "Izravna rezervacija: bez naknada platformi, osobna potvrda.",
     "rates_h": "Cijene",
     "rate_now": "Trenutačna cijena po noći",
-    "special_h": "Posebni termini"
+    "special_h": "Posebni termini",
+    "fees_p": "Naknada za čišćenje {c} po boravku. Dodatni gosti (od 3. gosta): {e} po osobi i noći. Tjedni popust od 7 noćenja: {w} % zimi, {s} % u sezoni. Minimalni boravak zimi: {n} noćenja.",
+    "part_cleaning": "Čišćenje {v}",
+    "part_discount": "Popust −{v}",
+    "part_extra": "Dodatni gosti {v}"
   },
   "cs": {
     "skip": "Přejít na obsah",
@@ -372,7 +384,11 @@
     "direct_note": "Přímá rezervace: bez poplatků platforem, osobní potvrzení.",
     "rates_h": "Ceny",
     "rate_now": "Aktuální cena za noc",
-    "special_h": "Zvláštní termíny"
+    "special_h": "Zvláštní termíny",
+    "fees_p": "Poplatek za úklid {c} za pobyt. Další hosté (od 3. hosta): {e} za osobu a noc. Týdenní sleva od 7 nocí: {w} % v zimě, {s} % v sezóně. Minimální pobyt v zimě: {n} nocí.",
+    "part_cleaning": "Úklid {v}",
+    "part_discount": "Sleva −{v}",
+    "part_extra": "Další hosté {v}"
   },
   "hu": {
     "skip": "Ugrás a tartalomhoz",
@@ -465,7 +481,11 @@
     "direct_note": "Közvetlen foglalás: platformdíjak nélkül, személyes visszaigazolás.",
     "rates_h": "Árak",
     "rate_now": "Jelenlegi ár éjszakánként",
-    "special_h": "Különleges időpontok"
+    "special_h": "Különleges időpontok",
+    "fees_p": "Takarítási díj: {c} tartózkodásonként. További vendégek (a 3. vendégtől): {e} személyenként és éjszakánként. Heti kedvezmény 7 éjszakától: {w} % télen, {s} % a szezonban. Minimális tartózkodás télen: {n} éjszaka.",
+    "part_cleaning": "Takarítás {v}",
+    "part_discount": "Kedvezmény −{v}",
+    "part_extra": "További vendégek {v}"
   },
   "pl": {
     "skip": "Przejdź do treści",
@@ -560,7 +580,11 @@
     "direct_note": "Rezerwacja bezpośrednia: bez opłat platform, osobiste potwierdzenie.",
     "rates_h": "Ceny",
     "rate_now": "Aktualna cena za noc",
-    "special_h": "Wyjątkowe terminy"
+    "special_h": "Wyjątkowe terminy",
+    "fees_p": "Opłata za sprzątanie: {c} za pobyt. Dodatkowi goście (od 3. osoby): {e} za osobę i noc. Rabat tygodniowy od 7 nocy: {w} % zimą, {s} % w sezonie. Minimalny pobyt zimą: {n} nocy.",
+    "part_cleaning": "Sprzątanie {v}",
+    "part_discount": "Rabat −{v}",
+    "part_extra": "Dodatkowi goście {v}"
   },
   "it": {
     "skip": "Vai al contenuto",
@@ -653,7 +677,11 @@
     "direct_note": "Prenotazione diretta: senza commissioni, conferma personale.",
     "rates_h": "Prezzi",
     "rate_now": "Prezzo attuale a notte",
-    "special_h": "Date speciali"
+    "special_h": "Date speciali",
+    "fees_p": "Pulizia: {c} a soggiorno. Ospiti aggiuntivi (dal 3° ospite): {e} a persona per notte. Sconto settimanale da 7 notti: {w} % in inverno, {s} % in stagione. Soggiorno minimo in inverno: {n} notti.",
+    "part_cleaning": "Pulizia {v}",
+    "part_discount": "Sconto −{v}",
+    "part_extra": "Ospiti aggiuntivi {v}"
   },
   "sl": {
     "skip": "Preskoči na vsebino",
@@ -748,6 +776,10 @@
     "direct_note": "Neposredna rezervacija: brez provizij platform, osebna potrditev.",
     "rates_h": "Cene",
     "rate_now": "Trenutna cena na noč",
-    "special_h": "Posebni termini"
+    "special_h": "Posebni termini",
+    "fees_p": "Čiščenje: {c} na bivanje. Dodatni gostje (od 3. gosta): {e} na osebo in noč. Tedenski popust od 7 noči: {w} % pozimi, {s} % v sezoni. Minimalno bivanje pozimi: {n} noči.",
+    "part_cleaning": "Čiščenje {v}",
+    "part_discount": "Popust −{v}",
+    "part_extra": "Dodatni gostje {v}"
   }
 }
