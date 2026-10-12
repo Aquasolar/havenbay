@@ -35,6 +35,7 @@
     for (var t = toUTC(inD); t < toUTC(outD); t += DAY) {
       var month = String(new Date(t).getUTCMonth() + 1);
       var p = unit.nightly ? unit.nightly[month] : null;
+      if (unit.daily && typeof unit.daily[fromUTC(t)] === 'number') p = unit.daily[fromUTC(t)];
       if (typeof p !== 'number') return { nights: nights, total: null, mode: 'request' };
       total += p;
     }
@@ -120,6 +121,17 @@
         statusEl.classList.add('is-error');
         statusEl.textContent = ui.avail_error;
       });
+    }
+
+    function loadDaily() {
+      if (!D.daily_url) return Promise.resolve();
+      return fetch(D.daily_url, { cache: 'no-cache' }).then(function (r) {
+        if (!r.ok) throw new Error('http ' + r.status);
+        return r.json();
+      }).then(function (j) {
+        Object.keys(D.units).forEach(function (k) { D.units[k].daily = (j.units && j.units[k]) || {}; });
+        D.events = j.events || [];
+      }).catch(function () { /* ohne Tagespreise: Monatspreise gelten */ });
     }
 
     function recomputeBlocked() {
@@ -294,6 +306,25 @@
     var priceHost = $('#price-table');
     if (priceHost) renderPrices(priceHost);
 
+    function renderEvents(host) {
+      var today = fromUTC(Date.now());
+      var list = (D.events || []).filter(function (e) { return e.to >= today; }).slice(0, 12);
+      if (!list.length) return;
+      var h = doc.createElement('h3'); h.textContent = ui.special_h; host.appendChild(h);
+      var fmtDay = new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short', timeZone: 'UTC' });
+      var table = doc.createElement('table'); table.className = 'price-table';
+      list.forEach(function (e) {
+        var u = unitCfg(); var p = u.daily && u.daily[e.from];
+        if (typeof p !== 'number') return;
+        var tr = doc.createElement('tr');
+        var th = doc.createElement('th'); th.scope = 'row';
+        th.textContent = e.label + ' (' + fmtDay.format(new Date(toUTC(e.from))) + (e.to !== e.from ? '–' + fmtDay.format(new Date(toUTC(e.to))) : '') + ')';
+        var td = doc.createElement('td'); td.textContent = D.currency_symbol + ' ' + p + ' ' + ui.per_night;
+        tr.appendChild(th); tr.appendChild(td); table.appendChild(tr);
+      });
+      if (table.children.length) host.appendChild(table);
+    }
+
     function renderPrices(host) {
       var u = unitCfg();
       var table = doc.createElement('table'); table.className = 'price-table';
@@ -311,7 +342,10 @@
 
     setGuests();
     renderCal(); renderSummary();
-    loadAvailability().then(function () { recomputeBlocked(); renderCal(); renderSummary(); });
+    Promise.all([loadAvailability(), loadDaily()]).then(function () {
+      recomputeBlocked(); renderCal(); renderSummary();
+      if (priceHost) renderEvents(priceHost);
+    });
   }
 
   /* Karussell */

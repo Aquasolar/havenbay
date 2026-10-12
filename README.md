@@ -57,6 +57,28 @@ Die Links gehören nur in Secrets, nie in das Repository. Auf der Website ersche
 2. Bereitstellen > Web-App (Ausführen als: Ich, Zugriff: Jeder).
 3. URL in `config.json` bei `form_endpoint` eintragen. Ohne Endpunkt öffnet das Formular das E-Mail-Programm.
 
+## Gästeseite (/guest)
+
+Die Gästeinfos liegen unter `https://www.havenbay.eu/guest` (Englisch) und sind per Sprachmenü in alle 8 Sprachen umschaltbar (`/de/guest.html` usw.). Die Seite ist nicht von der Website verlinkt, steht auf `noindex` und ist in `robots.txt` ausgeschlossen. Die URL bleibt gleich, die QR-Codes in den Apartments können also hängen bleiben.
+
+Inhalt ändern: `content/guest.json` (WLAN, Telefonnummern, Zeiten oben; Texte je Sprache unter `t`). Achtung: Das Repository und die Seite sind öffentlich lesbar. Keine Türcodes oder Safe-Codes eintragen. Das WLAN-Passwort ist wie bisher für jeden mit dem Link sichtbar.
+
+## Tagespreise
+
+Preise pro Nacht lassen sich für einzelne Tage oder Zeiträume festlegen (z. B. Lada-Marathon). Sie gehen vor den Monatspreisen aus `content/prices.json`.
+
+1. Google-Tabelle anlegen mit den Spalten `von`, `bis`, `studio`, `apartment`, `bezeichnung` (Datum als `13.08.2027` oder `2027-08-13`; `bis` leer = ein Tag; Preis leer = Monatspreis gilt; `bis` und Preise gelten je Nacht, `bis` inklusive).
+2. Datei > Im Web veröffentlichen > Blatt als CSV. Den Link als Secret `PRICES_CSV_URL` eintragen.
+3. Die Seite liest die Tabelle stündlich. Zeiträume mit Bezeichnung erscheinen auf den Unterseiten unter „Special dates“. Monatspreise ab 28 Nächten bleiben unverändert.
+
+## Reinigungstag
+
+`content/operations.json`: Endet ein Aufenthalt an einem Werktag (Mo–Fr), ist die Nacht des Abreisetags ebenfalls gesperrt, damit die Wohnung gerichtet werden kann. Am Wochenende gibt es keinen Puffer. Zeiträume ohne Puffer (Urlaub, Lenka vor Ort) unter `free_dates` eintragen, z. B. `[["2027-08-01", "2027-08-31"]]`.
+
+Die Sperre gilt für die Website. Damit auch Booking sie berücksichtigt, erzeugt die Synchronisation pro Unterkunft eine iCal-Datei mit Direktbuchungen und Reinigungstagen (keine Buchungen der Plattformen): `https://www.havenbay.eu/ical/<ICAL_EXPORT_TOKEN>/studio.ics` und `.../apartment.ics`. Diese Links bei Booking und Airbnb als zusätzlichen Kalender importieren (sofern die Plattform den Import anbietet). Airbnb kann Vorbereitungszeiten auch selbst einstellen.
+
+Optionale Secrets: `ICAL_DIRECT_STUDIO`, `ICAL_DIRECT_APARTMENT` (iCal-Links der Google-Kalender mit Direktbuchungen), `ICAL_EXPORT_TOKEN` (zufällige Zeichenfolge, mindestens 20 Zeichen).
+
 ## Fotos
 
 Quelle: Google Drive, `Immobilien/Rogotin Primorska 14A/HavenBay/Fotos/WebSite` und `Things to do`. Für das Web verkleinert (max. 1600 px) in `site/assets/img/`:

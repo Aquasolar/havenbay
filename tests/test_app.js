@@ -14,3 +14,6 @@ assert.deepStrictEqual(a.quote(u, '2026-10-01', '2026-10-31'), { nights: 30, tot
 assert.strictEqual(a.quote(u, '2027-05-20', '2027-06-20').mode, 'request');
 assert.strictEqual(a.plural({ one: '{n} Nacht', other: '{n} Nächte' }, 'de', 1), '1 Nacht');
 console.log('app.js tests ok');
+const u2 = { nightly: { '8': 100 }, daily: { '2027-08-14': 150 }, monthly: null };
+assert.deepStrictEqual(a.quote(u2, '2027-08-13', '2027-08-16'), { nights: 3, total: 350, mode: 'nightly' });
+console.log('daily price test ok');

@@ -1,0 +1,13 @@
+{
+  "_anleitung": "Reinigungstag: Endet ein Aufenthalt an einem Werktag (0=Montag ... 6=Sonntag), ist auch die Nacht des Abreisetags gesperrt. free_dates: Zeiträume [von, bis] (JJJJ-MM-TT), in denen kein Puffer nötig ist, z. B. Urlaub, wenn Lenka vor Ort ist.",
+  "cleaning_buffer": {
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "free_dates": []
+  }
+}

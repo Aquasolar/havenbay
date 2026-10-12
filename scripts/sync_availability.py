@@ -5,10 +5,13 @@ Die Feed-URLs stehen NICHT im Repository, sondern als GitHub-Secrets
 (ICAL_STUDIO, ICAL_APARTMENT; mehrere URLs durch Leerzeichen/Zeilenumbruch getrennt).
 Ausgegeben werden nur Datumsbereiche [Anreise, Abreise) - keine Gästedaten.
 """
-import json, os, re, sys, urllib.request
+import csv, io, json, os, re, sys, urllib.request
 from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 
 UNITS = {"studio": "ICAL_STUDIO", "apartment": "ICAL_APARTMENT"}
+DIRECT = {"studio": "ICAL_DIRECT_STUDIO", "apartment": "ICAL_DIRECT_APARTMENT"}  # optional: Direktbuchungen (Google-Kalender)
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def unfold(text):
@@ -56,6 +59,86 @@ def merge(ranges, today):
     return out
 
 
+def load_ops():
+    p = ROOT / "content" / "operations.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def in_free(d, free_ranges):
+    for a, b in free_ranges:
+        if date.fromisoformat(a) <= d <= date.fromisoformat(b):
+            return True
+    return False
+
+
+def add_cleaning_buffer(ranges, ops, today):
+    """Reinigungstag: Endet ein Aufenthalt an einem Werktag (Abreisetag), ist diese Nacht ebenfalls gesperrt,
+    außer an freien Tagen (Wochenende, Urlaub mit Lenka vor Ort). Gibt (alle_Sperren, nur_Puffer) zurück."""
+    cb = ops.get("cleaning_buffer") or {}
+    weekdays = set(cb.get("weekdays", []))
+    free = cb.get("free_dates", [])
+    buffers = []
+    for s, e in ranges:
+        if e >= today and e.weekday() in weekdays and not in_free(e, free):
+            buffers.append((e, e + timedelta(days=1)))
+    return merge(list(ranges) + buffers, today), merge(buffers, today)
+
+
+def parse_date_any(v):
+    v = (v or "").strip()
+    if not v:
+        return None
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", v)
+    if m:
+        return date(int(m[1]), int(m[2]), int(m[3]))
+    m = re.match(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$", v)
+    if m:
+        return date(int(m[3]), int(m[2]), int(m[1]))
+    raise ValueError("Datum nicht lesbar")
+
+
+def parse_price_csv(text):
+    """Tabelle mit Spalten: von, bis (optional), studio, apartment, bezeichnung (optional).
+    Gilt je Nacht von..bis (beide inklusive). Leere Preise werden ignoriert."""
+    units = {"studio": {}, "apartment": {}}
+    events = []
+    rdr = csv.DictReader(io.StringIO(text))
+    rows = [{(k or "").strip().lower(): (v or "").strip() for k, v in r.items()} for r in rdr]
+    for r in rows:
+        a = parse_date_any(r.get("von") or r.get("from") or r.get("datum") or r.get("date"))
+        if not a:
+            continue
+        b = parse_date_any(r.get("bis") or r.get("to")) or a
+        label = r.get("bezeichnung") or r.get("label") or ""
+        got = False
+        for u in units:
+            v = r.get(u, "").replace(",", ".").replace("€", "").strip()
+            if not v:
+                continue
+            price = float(v)
+            price = int(price) if price == int(price) else price
+            d = a
+            while d <= b:
+                units[u][d.isoformat()] = price
+                d += timedelta(days=1)
+            got = True
+        if got and label:
+            events.append({"from": a.isoformat(), "to": b.isoformat(), "label": label})
+    return {"units": units, "events": events}
+
+
+def ical_blocks(ranges, name):
+    """iCal-Datei nur mit Datumsbereichen (keine Gästedaten)."""
+    out = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Haven Bay//Blocks//EN", "CALSCALE:GREGORIAN"]
+    for i, (s, e) in enumerate(ranges):
+        out += ["BEGIN:VEVENT", f"UID:hb-{name}-{s.isoformat()}-{i}@havenbay.eu",
+                f"DTSTAMP:{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
+                f"DTSTART;VALUE=DATE:{s.strftime('%Y%m%d')}", f"DTEND;VALUE=DATE:{e.strftime('%Y%m%d')}",
+                "SUMMARY:Blocked", "END:VEVENT"]
+    out.append("END:VCALENDAR")
+    return "\r\n".join(out) + "\r\n"
+
+
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "havenbay-sync/1.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
@@ -64,7 +147,10 @@ def fetch(url):
 
 def main(out_path):
     today = date.today()
+    ops = load_ops()
+    outdir = os.path.dirname(out_path) or "."
     result = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "units": {}}
+    exports = {}
     failed = False
     for unit, env in UNITS.items():
         urls = os.environ.get(env, "").split()
@@ -72,20 +158,51 @@ def main(out_path):
             print(f"FEHLER: Secret {env} fehlt oder ist leer.", file=sys.stderr)
             failed = True
             continue
-        all_ranges = []
+        platform_ranges = []
         for i, url in enumerate(urls, 1):
             try:
-                all_ranges += parse_ical(fetch(url))
+                platform_ranges += parse_ical(fetch(url))
             except Exception as exc:  # URL nie ausgeben
                 print(f"FEHLER: {unit} Feed {i} nicht ladbar ({type(exc).__name__}).", file=sys.stderr)
                 failed = True
-        result["units"][unit] = [[s.isoformat(), e.isoformat()] for s, e in merge(all_ranges, today)]
+        direct_ranges = []
+        for i, url in enumerate(os.environ.get(DIRECT[unit], "").split(), 1):
+            try:
+                direct_ranges += parse_ical(fetch(url))
+            except Exception as exc:
+                print(f"FEHLER: {unit} Direktkalender {i} nicht ladbar ({type(exc).__name__}).", file=sys.stderr)
+                failed = True
+        everything = merge(platform_ranges + direct_ranges, today)
+        blocked, buffers = add_cleaning_buffer(everything, ops, today)
+        result["units"][unit] = [[s.isoformat(), e.isoformat()] for s, e in blocked]
+        # Export für Plattformen: nur Direktbuchungen und Reinigungstage (nie deren eigene Buchungen zurückspielen)
+        exports[unit] = merge(direct_ranges + buffers, today)
+    # Tagespreise aus veröffentlichter Google-Tabelle (optional)
+    daily = {"updated": result["updated"], "units": {"studio": {}, "apartment": {}}, "events": []}
+    csv_url = os.environ.get("PRICES_CSV_URL", "").strip()
+    if csv_url:
+        try:
+            parsed = parse_price_csv(fetch(csv_url))
+            daily["units"], daily["events"] = parsed["units"], parsed["events"]
+        except Exception as exc:
+            print(f"FEHLER: Preistabelle nicht lesbar ({type(exc).__name__}).", file=sys.stderr)
+            failed = True
     if failed:
         return 1
-    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    os.makedirs(outdir, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=1)
-    print("availability.json geschrieben:", {k: len(v) for k, v in result["units"].items()})
+    with open(os.path.join(outdir, "daily-prices.json"), "w", encoding="utf-8") as f:
+        json.dump(daily, f, ensure_ascii=False, indent=1)
+    token = os.environ.get("ICAL_EXPORT_TOKEN", "").strip()
+    if token:
+        d = os.path.join(outdir, "ical", token)
+        os.makedirs(d, exist_ok=True)
+        for unit, rng in exports.items():
+            with open(os.path.join(d, f"{unit}.ics"), "w", encoding="utf-8", newline="") as f:
+                f.write(ical_blocks(rng, unit))
+    print("availability.json geschrieben:", {k: len(v) for k, v in result["units"].items()},
+          "| Tagespreise:", {k: len(v) for k, v in daily["units"].items()})
     return 0
 
 

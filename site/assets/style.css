@@ -261,3 +261,18 @@ body:has(.draft-banner) { --banner-h: 2.1rem; }
 .rate-label { margin: 0.7rem 0 0; font-size: var(--step--1); color: var(--dusk); }
 .rate-price { margin: 0; font-size: var(--step-2); font-weight: 700; color: var(--lagoon); font-variant-numeric: tabular-nums; }
 .rate-price span { font-size: var(--step--1); font-weight: 400; color: var(--dusk); }
+
+/* Gästeseite */
+.guest .wrap { max-width: 44rem; }
+.guest .lead { font-size: var(--step-1); color: var(--dusk); margin-top: 0; }
+.guest h2 { margin-top: 2.2rem; }
+.guest ul, .guest ol { padding-left: 1.2rem; }
+.guest li { margin: 0.25rem 0; }
+.pairs { display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1.4rem; margin: 0 0 0.6rem; }
+.pairs dt { color: var(--dusk); }
+.pairs dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pairs code { font-size: var(--step-1); letter-spacing: 0.02em; }
+.two-lists { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem 2rem; }
+.two-lists > div { min-width: 0; }
+.guest .closing { margin-top: 2.2rem; }
+.is-guest .brand { text-decoration: none; }

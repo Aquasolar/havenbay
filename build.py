@@ -44,6 +44,8 @@ class Site:
         self.ui = load_json("content/ui.json")
         self.units = load_json("content/units.json")
         self.prices = load_json("content/prices.json")
+        self.guest = load_json("content/guest.json")
+        self.daily = {}
         self.things = load_json("content/things-to-do.json")
         self.legal = load_json("content/legal.json")
         self.langs = self.cfg["languages"]
@@ -69,7 +71,7 @@ class Site:
             problems.append("config.json: contact_email fehlt")
         if not c.get("form_endpoint") and not c.get("contact_email"):
             problems.append("config.json: weder form_endpoint noch contact_email gesetzt, Anfragen könnten nicht ankommen")
-        for key in ("register", "director"):
+        for key in ("director",):
             if not c["operator"].get(key):
                 problems.append(f"config.json: operator.{key} fehlt (Impressum)")
         if not self.prices.get("confirmed"):
@@ -90,7 +92,7 @@ def lang_href(lang, page):
     return f"../{lang}/" if page == "index" else f"../{lang}/{page}.html"
 
 
-def head(site, lang, page, title, desc):
+def head(site, lang, page, title, desc, noindex=False):
     base = site.cfg["base_url"].rstrip("/")
     alts = []
     for l in site.langs:
@@ -100,7 +102,9 @@ def head(site, lang, page, title, desc):
     path = f"{default}/" if page == "index" else f"{default}/{page}.html"
     alts.append(f'<link rel="alternate" hreflang="x-default" href="{base}/{path}">')
     self_path = f"{lang}/" if page == "index" else f"{lang}/{page}.html"
-    robots = '<meta name="robots" content="noindex, nofollow">\n' if site.draft else ""
+    robots = '<meta name="robots" content="noindex, nofollow">\n' if (site.draft or noindex) else ""
+    if noindex:
+        alts = []
     icon = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
             "%3Crect width='32' height='32' rx='7' fill='%230f3f4a'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23f08a24'/%3E%3C/svg%3E")
     return f"""<!doctype html>
@@ -158,8 +162,8 @@ def footer(site, lang, ui):
 <div class="wrap footer-grid">
 <div>
 <p><strong>Haven Bay Apartments</strong></p>
-<p>{esc(ui["footer_op"])}</p>
-<p>{esc(op["address"])}</p>
+<p>{esc(site.cfg.get("property_address", ""))}</p>
+<p>{esc(ui["footer_op"])}, {esc(op["address"])}</p>
 {contact}
 </div>
 <div class="footer-links">
@@ -255,6 +259,7 @@ def page_data(site, lang, ui):
         "units": units,
         "currency_symbol": site.currency,
         "availability_url": "../availability.json",
+        "daily_url": "../daily-prices.json",
         "endpoint": site.cfg.get("form_endpoint", ""),
         "contact_email": site.cfg.get("contact_email", ""),
         "demo": bool(site.draft),
@@ -276,7 +281,11 @@ def tail(site, lang, ui, with_data=True):
 # --------------------------------------------------------------------------- Seiten
 def current_nightly(site, unit):
     from datetime import date
-    v = site.prices["units"][unit]["nightly"].get(str(date.today().month))
+    today = date.today()
+    d = site.daily.get("units", {}).get(unit, {}).get(today.isoformat())
+    if isinstance(d, (int, float)):
+        return d
+    v = site.prices["units"][unit]["nightly"].get(str(today.month))
     return v if isinstance(v, (int, float)) else None
 
 
@@ -356,6 +365,7 @@ def page_index(site, lang):
 <h2 id="contact-h">{esc(ui["contact_h"])}</h2>
 <p>{esc(ui["contact_p"])}</p>
 {''.join(contact_lines)}
+<p class="muted">{esc(site.cfg.get("property_address", ""))}</p>
 </div>
 </section>
 </main>
@@ -516,6 +526,77 @@ def page_things(site, lang):
 {tail(site, lang, ui, with_data=False)}"""
 
 
+def page_guest(site, lang, root=False):
+    g = site.guest
+    t = g["t"].get(lang) or g["t"]["en"]
+    names = site.cfg["language_names"]
+    items = "".join(
+        f'<li><a href="{lang_href(l, "guest")}" hreflang="{l}" lang="{l}"{" aria-current=\"true\"" if l == lang else ""}>{esc(names[l])}</a></li>'
+        for l in site.langs)
+    banner = f'<div class="draft-banner" role="note">{esc(DRAFT_BANNER)}</div>\n' if site.draft else ""
+
+    def ul(lst):
+        return "<ul>" + "".join(f"<li>{esc(x)}</li>" for x in lst) + "</ul>"
+
+    steps = "<ol>" + "".join(f"<li>{esc(x)}</li>" for x in t["tv_steps"]) + "</ol>"
+    emerg = "<dl class=\"pairs\">" + "".join(
+        f'<dt>{esc(lbl)}</dt><dd><a href="tel:{num}">{num}</a></dd>' for lbl, num in zip(t["emerg_labels"], g["emergency"])) + "</dl>"
+    contacts = "<dl class=\"pairs\">" + "".join(
+        f'<dt>{esc(c["name"])}</dt><dd><a href="tel:{c["phone"].replace(" ", "")}">{esc(c["phone"])}</a></dd>' for c in g["contacts"]) + "</dl>"
+    tm = g["times"]
+    rules = (f'<dl class="pairs"><dt>{esc(t["checkin"])}</dt><dd>{tm["checkin"]}</dd>'
+             f'<dt>{esc(t["checkout"])}</dt><dd>{tm["checkout"]}</dd>'
+             f'<dt>{esc(t["quiet"])}</dt><dd>{tm["quiet"]}</dd></dl>' + ul(t["rules_items"]))
+    wifi = (f'<dl class="pairs wifi"><dt>{esc(t["network"])}</dt><dd><code>{esc(g["wifi"]["ssid"])}</code></dd>'
+            f'<dt>{esc(t["password"])}</dt><dd><code>{esc(g["wifi"]["password"])}</code></dd></dl>')
+    base = site.cfg["base_url"].rstrip("/")
+    page = head(site, lang, "guest", t["title"] + " | Haven Bay", t["sub"], noindex=True)
+    if root:
+        page = page.replace(f'href="{base}/{lang}/guest.html"', f'href="{base}/guest/"')
+    return f"""{page}
+<body class="is-sub is-guest">
+{banner}<header class="site-header">
+<div class="wrap">
+<span class="brand">Haven Bay<small>Apartments</small></span>
+<details class="lang"><summary aria-label="{esc(site.ui_for(lang)["lang_label"])}">{lang.upper()}</summary><ul>{items}</ul></details>
+</div>
+</header>
+<main id="main">
+<section class="section guest">
+<div class="wrap">
+<h1>{esc(t["title"])}</h1>
+<p class="lead">{esc(t["sub"])}</p>
+<h2>{esc(t["wifi_h"])}</h2>
+{wifi}
+<h2>{esc(t["tv_h"])}</h2>
+{steps}
+<p class="muted">{esc(t["tv_note"])}</p>
+<h2>{esc(t["apts_h"])}</h2>
+<div class="two-lists">
+<div><h3>{esc(t["studio_h"])}</h3>{ul(t["studio_items"])}</div>
+<div><h3>{esc(t["apartment_h"])}</h3>{ul(t["apartment_items"])}</div>
+</div>
+<h2>{esc(t["house_h"])}</h2>
+{ul(t["house_items"])}
+<h2>{esc(t["rules_h"])}</h2>
+{rules}
+<h2>{esc(t["ev_h"])}</h2>
+<p>{esc(t["ev_p"])}</p>
+<h2>{esc(t["emerg_h"])}</h2>
+{emerg}
+<h2>{esc(t["contact_h"])}</h2>
+{contacts}
+<p class="closing">{esc(t["closing_p"])}</p>
+<p><a class="btn" href="{base}/{lang}/">{esc(t["site_link"])}</a></p>
+</div>
+</section>
+</main>
+<script src="../assets/app.js?v={site.version}" defer></script>
+</body>
+</html>
+"""
+
+
 def page_legal(site, lang):
     ui = site.ui_for(lang)
     leg = site.legal.get(lang) or site.legal["en"]
@@ -535,7 +616,8 @@ def page_legal(site, lang):
     row("operator", op["name"])
     row("address", op["address"])
     row("oib", op.get("oib"))
-    row("register", op.get("register"))
+    if op.get("register"):
+        row("register", op.get("register"))
     row("director", op.get("director"))
     row("email", site.cfg.get("contact_email"))
     row("phone", site.cfg.get("contact_phone"))
@@ -599,6 +681,13 @@ def build(args):
     out.mkdir(parents=True)
     shutil.copytree(ROOT / "site/assets", out / "assets", ignore=shutil.ignore_patterns(".gitkeep"))
 
+    if args.daily and Path(args.daily).exists():
+        site.daily = json.loads(Path(args.daily).read_text(encoding="utf-8"))
+        shutil.copyfile(args.daily, out / "daily-prices.json")
+    else:
+        write(out / "daily-prices.json", json.dumps({"units": {"studio": {}, "apartment": {}}, "events": []}))
+    if args.ical_dir and Path(args.ical_dir).exists():
+        shutil.copytree(args.ical_dir, out / "ical")
     avail = Path(args.availability) if args.availability else None
     if avail and avail.exists():
         shutil.copyfile(avail, out / "availability.json")
@@ -612,6 +701,8 @@ def build(args):
             write(out / lang / f"{u}.html", page_unit(site, lang, u))
         write(out / lang / "things-to-do.html", page_things(site, lang))
         write(out / lang / "legal.html", page_legal(site, lang))
+        write(out / lang / "guest.html", page_guest(site, lang))
+    write(out / "guest" / "index.html", page_guest(site, site.cfg["default_language"], root=True))
 
     base = site.cfg["base_url"].rstrip("/")
     robots = '<meta name="robots" content="noindex, nofollow">\n' if site.draft else ""
@@ -636,7 +727,7 @@ def build(args):
                 urls.append(f"<url><loc>{base}/{path}</loc></url>")
         write(out / "sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
               + "\n".join(urls) + "\n</urlset>\n")
-        write(out / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
+        write(out / "robots.txt", f"User-agent: *\nAllow: /\nDisallow: /guest/\n" + "".join(f"Disallow: /{l}/guest.html\n" for l in site.langs) + f"Sitemap: {base}/sitemap.xml\n")
 
     print(f"OK: {len(site.langs)} Sprachen nach {out} gebaut" + (" (Entwurf)" if site.draft else ""))
     return 0
@@ -646,5 +737,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="dist")
     ap.add_argument("--availability", default="")
+    ap.add_argument("--daily", default="", help="build/daily-prices.json (optional)")
+    ap.add_argument("--ical-dir", default="", help="build/ical (optional, Export für Plattformen)")
     ap.add_argument("--draft", action="store_true", help="Entwurf: Platzhalter erlaubt, noindex, keine echte Versendung")
     sys.exit(build(ap.parse_args()))

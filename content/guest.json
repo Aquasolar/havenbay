@@ -1,0 +1,525 @@
+{
+ "wifi": {
+  "ssid": "HavenBay",
+  "password": "surfinrogotin"
+ },
+ "contacts": [
+  {
+   "name": "Ortwin",
+   "phone": "+49 176 10023728"
+  },
+  {
+   "name": "Lenka",
+   "phone": "+385 91 8998976"
+  }
+ ],
+ "emergency": [
+  "112",
+  "192",
+  "193",
+  "194"
+ ],
+ "times": {
+  "checkin": "14:00",
+  "checkout": "10:00",
+  "quiet": "22:00–07:00"
+ },
+ "t": {
+  "en": {
+   "title": "Guest information",
+   "sub": "Everything you need for your stay",
+   "wifi_h": "Wi-Fi",
+   "network": "Network",
+   "password": "Password",
+   "tv_h": "TV and live television",
+   "tv_steps": [
+    "Press HOME on the remote.",
+    "Open “IPTV Smarters”.",
+    "Select “Live TV”.",
+    "Choose a language category, then a channel."
+   ],
+   "tv_note": "Back returns to the channel list. If the app closes, repeat the steps. Categories include German, English, Croatian, Italian, French, Czech, Polish, Hungarian and more.",
+   "apts_h": "Your apartment",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartment (Haven Bay 2)",
+   "studio_items": [
+    "TV and IPTV",
+    "Induction cooktop",
+    "Air fryer",
+    "Washing machine",
+    "Coffee machine",
+    "Two sofa beds (grey and ochre)",
+    "LED light bars",
+    "USB charging point"
+   ],
+   "apartment_items": [
+    "TV and IPTV",
+    "Washing machine",
+    "Coffee machine",
+    "Sofa bed"
+   ],
+   "house_h": "House and outdoor area",
+   "house_items": [
+    "Free parking in front of the property along the waterfront.",
+    "The terrace is shared by both apartments.",
+    "Retract the sun shade in strong wind.",
+    "A SUP board with the Haven Bay inscription is free to use.",
+    "You are welcome to use the BBQ. Please clean it afterwards."
+   ],
+   "rules_h": "House rules",
+   "checkin": "Check-in",
+   "checkout": "Check-out",
+   "quiet": "Quiet hours",
+   "rules_items": [
+    "No smoking inside the apartment.",
+    "Pets are welcome."
+   ],
+   "ev_h": "Electric vehicle charging",
+   "ev_p": "Public charging station in Ploče, about 5 minutes by car.",
+   "emerg_h": "Emergency numbers",
+   "emerg_labels": [
+    "Emergency",
+    "Police",
+    "Fire brigade",
+    "Ambulance"
+   ],
+   "contact_h": "Contact us",
+   "closing_p": "If you enjoyed your stay, please leave a review on Airbnb or Booking.com. For future stays, contact us directly for availability.",
+   "site_link": "Book direct at havenbay.eu"
+  },
+  "de": {
+   "title": "Gästeinformationen",
+   "sub": "Alles für Ihren Aufenthalt",
+   "wifi_h": "WLAN",
+   "network": "Netzwerk",
+   "password": "Passwort",
+   "tv_h": "Fernseher und Live-TV",
+   "tv_steps": [
+    "HOME-Taste auf der Fernbedienung drücken.",
+    "„IPTV Smarters“ öffnen.",
+    "„Live TV“ wählen.",
+    "Sprachkategorie wählen, dann einen Sender."
+   ],
+   "tv_note": "Mit „Zurück“ gelangen Sie zur Senderliste. Schließt sich die App, die Schritte wiederholen. Kategorien u. a.: Deutsch, Englisch, Kroatisch, Italienisch, Französisch, Tschechisch, Polnisch, Ungarisch.",
+   "apts_h": "Ihre Unterkunft",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartment (Haven Bay 2)",
+   "studio_items": [
+    "Fernseher und IPTV",
+    "Induktionskochfeld",
+    "Heißluftfritteuse",
+    "Waschmaschine",
+    "Kaffeemaschine",
+    "Zwei Schlafsofas (grau und ocker)",
+    "LED-Lichtleisten",
+    "USB-Ladestelle"
+   ],
+   "apartment_items": [
+    "Fernseher und IPTV",
+    "Waschmaschine",
+    "Kaffeemaschine",
+    "Schlafsofa"
+   ],
+   "house_h": "Haus und Außenbereich",
+   "house_items": [
+    "Kostenlose Parkplätze vor dem Haus an der Uferpromenade.",
+    "Die Terrasse wird von beiden Apartments gemeinsam genutzt.",
+    "Bei starkem Wind bitte den Sonnenschutz einfahren.",
+    "Ein SUP-Board mit Haven-Bay-Aufschrift steht kostenlos zur Verfügung.",
+    "Der Grill darf benutzt werden. Bitte danach reinigen."
+   ],
+   "rules_h": "Hausregeln",
+   "checkin": "Check-in",
+   "checkout": "Check-out",
+   "quiet": "Ruhezeit",
+   "rules_items": [
+    "In der Unterkunft ist Rauchen nicht erlaubt.",
+    "Haustiere sind willkommen."
+   ],
+   "ev_h": "Elektroauto laden",
+   "ev_p": "Öffentliche Ladestation in Ploče, etwa 5 Autominuten entfernt.",
+   "emerg_h": "Notrufnummern",
+   "emerg_labels": [
+    "Notruf",
+    "Polizei",
+    "Feuerwehr",
+    "Rettung"
+   ],
+   "contact_h": "Kontakt",
+   "closing_p": "Wenn es Ihnen gefallen hat, freuen wir uns über eine Bewertung auf Airbnb oder Booking.com. Für künftige Aufenthalte fragen Sie uns direkt nach freien Terminen.",
+   "site_link": "Direkt buchen auf havenbay.eu"
+  },
+  "hr": {
+   "title": "Informacije za goste",
+   "sub": "Sve što vam treba za boravak",
+   "wifi_h": "Wi-Fi",
+   "network": "Mreža",
+   "password": "Lozinka",
+   "tv_h": "TV i televizija uživo",
+   "tv_steps": [
+    "Pritisnite tipku HOME na daljinskom.",
+    "Otvorite „IPTV Smarters“.",
+    "Odaberite „Live TV“.",
+    "Odaberite jezičnu kategoriju, zatim kanal."
+   ],
+   "tv_note": "Tipka za povratak vraća vas na popis kanala. Ako se aplikacija zatvori, ponovite korake. Kategorije uključuju njemački, engleski, hrvatski, talijanski, francuski, češki, poljski, mađarski i druge.",
+   "apts_h": "Vaš smještaj",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartman (Haven Bay 2)",
+   "studio_items": [
+    "TV i IPTV",
+    "Indukcijska ploča",
+    "Friteza na vrući zrak",
+    "Perilica rublja",
+    "Aparat za kavu",
+    "Dva kauča na razvlačenje (siva i oker)",
+    "LED svjetlosne trake",
+    "USB punjač"
+   ],
+   "apartment_items": [
+    "TV i IPTV",
+    "Perilica rublja",
+    "Aparat za kavu",
+    "Kauč na razvlačenje"
+   ],
+   "house_h": "Kuća i vanjski prostor",
+   "house_items": [
+    "Besplatan parking ispred kuće uz rivu.",
+    "Terasu dijele oba apartmana.",
+    "Pri jakom vjetru uvucite sjenilo.",
+    "SUP daska s natpisom Haven Bay besplatna je za korištenje.",
+    "Roštilj možete koristiti. Molimo očistite ga nakon upotrebe."
+   ],
+   "rules_h": "Kućni red",
+   "checkin": "Prijava",
+   "checkout": "Odjava",
+   "quiet": "Vrijeme mirovanja",
+   "rules_items": [
+    "Pušenje u smještaju nije dopušteno.",
+    "Kućni ljubimci su dobrodošli."
+   ],
+   "ev_h": "Punjenje električnih vozila",
+   "ev_p": "Javna punionica u Pločama, oko 5 minuta vožnje.",
+   "emerg_h": "Hitni brojevi",
+   "emerg_labels": [
+    "Hitna pomoć (opći)",
+    "Policija",
+    "Vatrogasci",
+    "Hitna medicinska pomoć"
+   ],
+   "contact_h": "Kontakt",
+   "closing_p": "Ako vam se boravak svidio, ostavite recenziju na Airbnbu ili Booking.com. Za buduće boravke slobodne termine provjerite izravno kod nas.",
+   "site_link": "Rezervirajte izravno na havenbay.eu"
+  },
+  "cs": {
+   "title": "Informace pro hosty",
+   "sub": "Vše pro váš pobyt",
+   "wifi_h": "Wi-Fi",
+   "network": "Síť",
+   "password": "Heslo",
+   "tv_h": "Televize a živé vysílání",
+   "tv_steps": [
+    "Na ovladači stiskněte HOME.",
+    "Otevřete „IPTV Smarters“.",
+    "Vyberte „Live TV“.",
+    "Zvolte jazykovou kategorii a poté kanál."
+   ],
+   "tv_note": "Tlačítko Zpět vás vrátí na seznam kanálů. Pokud se aplikace zavře, postup zopakujte. Kategorie: němčina, angličtina, chorvatština, italština, francouzština, čeština, polština, maďarština a další.",
+   "apts_h": "Vaše ubytování",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartmán (Haven Bay 2)",
+   "studio_items": [
+    "Televize a IPTV",
+    "Indukční varná deska",
+    "Horkovzdušná fritéza",
+    "Pračka",
+    "Kávovar",
+    "Dvě rozkládací pohovky (šedá a okrová)",
+    "LED světelné lišty",
+    "USB nabíječka"
+   ],
+   "apartment_items": [
+    "Televize a IPTV",
+    "Pračka",
+    "Kávovar",
+    "Rozkládací pohovka"
+   ],
+   "house_h": "Dům a venkovní prostor",
+   "house_items": [
+    "Bezplatné parkování před domem u nábřeží.",
+    "Terasu sdílejí oba apartmány.",
+    "Při silném větru stáhněte markýzu.",
+    "SUP prkno s nápisem Haven Bay můžete používat zdarma.",
+    "Gril můžete používat. Po použití ho prosím očistěte."
+   ],
+   "rules_h": "Domovní řád",
+   "checkin": "Příjezd",
+   "checkout": "Odjezd",
+   "quiet": "Noční klid",
+   "rules_items": [
+    "V ubytování se nesmí kouřit.",
+    "Domácí mazlíčci jsou vítáni."
+   ],
+   "ev_h": "Nabíjení elektromobilů",
+   "ev_p": "Veřejná nabíjecí stanice v Ploče, asi 5 minut autem.",
+   "emerg_h": "Tísňová čísla",
+   "emerg_labels": [
+    "Tísňová linka",
+    "Policie",
+    "Hasiči",
+    "Záchranná služba"
+   ],
+   "contact_h": "Kontakt",
+   "closing_p": "Pokud se vám u nás líbilo, zanechte nám prosím hodnocení na Airbnb nebo Booking.com. Volné termíny na příští pobyt se dozvíte přímo u nás.",
+   "site_link": "Rezervace přímo na havenbay.eu"
+  },
+  "hu": {
+   "title": "Információk vendégeknek",
+   "sub": "Minden, ami a tartózkodáshoz kell",
+   "wifi_h": "Wi-Fi",
+   "network": "Hálózat",
+   "password": "Jelszó",
+   "tv_h": "TV és élő adás",
+   "tv_steps": [
+    "Nyomja meg a HOME gombot a távirányítón.",
+    "Nyissa meg az „IPTV Smarters” alkalmazást.",
+    "Válassza a „Live TV” menüpontot.",
+    "Válasszon nyelvi kategóriát, majd csatornát."
+   ],
+   "tv_note": "A Vissza gomb a csatornalistához visz. Ha az alkalmazás bezárul, ismételje meg a lépéseket. Kategóriák: német, angol, horvát, olasz, francia, cseh, lengyel, magyar és továbbiak.",
+   "apts_h": "Az Ön szállása",
+   "studio_h": "Stúdió (Haven Bay 1)",
+   "apartment_h": "Apartman (Haven Bay 2)",
+   "studio_items": [
+    "TV és IPTV",
+    "Indukciós főzőlap",
+    "Forrólevegős sütő",
+    "Mosógép",
+    "Kávéfőző",
+    "Két kihúzható kanapé (szürke és okker)",
+    "LED fénysávok",
+    "USB töltőpont"
+   ],
+   "apartment_items": [
+    "TV és IPTV",
+    "Mosógép",
+    "Kávéfőző",
+    "Kihúzható kanapé"
+   ],
+   "house_h": "Ház és kültéri terület",
+   "house_items": [
+    "Ingyenes parkolás a ház előtt, a vízparton.",
+    "A teraszt mindkét apartman közösen használja.",
+    "Erős szélben kérjük, húzza vissza a napellenzőt.",
+    "A Haven Bay feliratú SUP deszka ingyenesen használható.",
+    "A grillsütő használható. Kérjük, használat után tisztítsa meg."
+   ],
+   "rules_h": "Házirend",
+   "checkin": "Bejelentkezés",
+   "checkout": "Kijelentkezés",
+   "quiet": "Csendes órák",
+   "rules_items": [
+    "A szálláson tilos a dohányzás.",
+    "Házi kedvencek szívesen látottak."
+   ],
+   "ev_h": "Elektromos autó töltése",
+   "ev_p": "Nyilvános töltőállomás Pločében, autóval kb. 5 percre.",
+   "emerg_h": "Segélyhívó számok",
+   "emerg_labels": [
+    "Általános segélyhívó",
+    "Rendőrség",
+    "Tűzoltóság",
+    "Mentők"
+   ],
+   "contact_h": "Kapcsolat",
+   "closing_p": "Ha elégedett volt a tartózkodással, kérjük, írjon értékelést az Airbnb-n vagy a Booking.com-on. Következő utazásához kérdezzen közvetlenül tőlünk szabad időpontokat.",
+   "site_link": "Foglaljon közvetlenül: havenbay.eu"
+  },
+  "pl": {
+   "title": "Informacje dla gości",
+   "sub": "Wszystko na czas pobytu",
+   "wifi_h": "Wi-Fi",
+   "network": "Sieć",
+   "password": "Hasło",
+   "tv_h": "Telewizor i telewizja na żywo",
+   "tv_steps": [
+    "Naciśnij HOME na pilocie.",
+    "Otwórz „IPTV Smarters”.",
+    "Wybierz „Live TV”.",
+    "Wybierz kategorię językową, a potem kanał."
+   ],
+   "tv_note": "Przycisk Wstecz wraca do listy kanałów. Jeśli aplikacja się zamknie, powtórz kroki. Kategorie: niemiecki, angielski, chorwacki, włoski, francuski, czeski, polski, węgierski i inne.",
+   "apts_h": "Twoje mieszkanie",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartament (Haven Bay 2)",
+   "studio_items": [
+    "Telewizor i IPTV",
+    "Płyta indukcyjna",
+    "Frytkownica beztłuszczowa",
+    "Pralka",
+    "Ekspres do kawy",
+    "Dwie rozkładane sofy (szara i ochra)",
+    "Listwy LED",
+    "Ładowarka USB"
+   ],
+   "apartment_items": [
+    "Telewizor i IPTV",
+    "Pralka",
+    "Ekspres do kawy",
+    "Rozkładana sofa"
+   ],
+   "house_h": "Dom i teren zewnętrzny",
+   "house_items": [
+    "Bezpłatny parking przed domem przy nabrzeżu.",
+    "Z tarasu korzystają oba apartamenty.",
+    "Przy silnym wietrze zwiń markizę.",
+    "Deska SUP z napisem Haven Bay jest do bezpłatnego użytku.",
+    "Z grilla można korzystać. Prosimy o jego wyczyszczenie po użyciu."
+   ],
+   "rules_h": "Regulamin",
+   "checkin": "Zameldowanie",
+   "checkout": "Wymeldowanie",
+   "quiet": "Cisza nocna",
+   "rules_items": [
+    "W mieszkaniu obowiązuje zakaz palenia.",
+    "Zwierzęta są mile widziane."
+   ],
+   "ev_h": "Ładowanie aut elektrycznych",
+   "ev_p": "Publiczna stacja ładowania w Ploče, ok. 5 minut jazdy samochodem.",
+   "emerg_h": "Numery alarmowe",
+   "emerg_labels": [
+    "Numer alarmowy",
+    "Policja",
+    "Straż pożarna",
+    "Pogotowie"
+   ],
+   "contact_h": "Kontakt",
+   "closing_p": "Jeśli pobyt Ci się podobał, zostaw opinię na Airbnb lub Booking.com. Wolne terminy na kolejny pobyt sprawdzisz bezpośrednio u nas.",
+   "site_link": "Rezerwuj bezpośrednio na havenbay.eu"
+  },
+  "it": {
+   "title": "Informazioni per gli ospiti",
+   "sub": "Tutto quello che serve per il soggiorno",
+   "wifi_h": "Wi-Fi",
+   "network": "Rete",
+   "password": "Password",
+   "tv_h": "TV e televisione in diretta",
+   "tv_steps": [
+    "Premi HOME sul telecomando.",
+    "Apri “IPTV Smarters”.",
+    "Seleziona “Live TV”.",
+    "Scegli una categoria linguistica, poi un canale."
+   ],
+   "tv_note": "Il tasto Indietro riporta all’elenco dei canali. Se l’app si chiude, ripeti i passaggi. Categorie: tedesco, inglese, croato, italiano, francese, ceco, polacco, ungherese e altre.",
+   "apts_h": "Il tuo alloggio",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Appartamento (Haven Bay 2)",
+   "studio_items": [
+    "TV e IPTV",
+    "Piano a induzione",
+    "Friggitrice ad aria",
+    "Lavatrice",
+    "Macchina del caffè",
+    "Due divani letto (grigio e ocra)",
+    "Barre luminose LED",
+    "Presa di ricarica USB"
+   ],
+   "apartment_items": [
+    "TV e IPTV",
+    "Lavatrice",
+    "Macchina del caffè",
+    "Divano letto"
+   ],
+   "house_h": "Casa e area esterna",
+   "house_items": [
+    "Parcheggio gratuito davanti alla casa, lungo il mare.",
+    "La terrazza è in comune tra i due appartamenti.",
+    "Con vento forte ritira la tenda da sole.",
+    "La tavola SUP con la scritta Haven Bay è a disposizione gratuitamente.",
+    "Puoi usare il barbecue. Ti chiediamo di pulirlo dopo l’uso."
+   ],
+   "rules_h": "Regole della casa",
+   "checkin": "Check-in",
+   "checkout": "Check-out",
+   "quiet": "Orari di silenzio",
+   "rules_items": [
+    "Vietato fumare all’interno dell’alloggio.",
+    "Gli animali sono i benvenuti."
+   ],
+   "ev_h": "Ricarica auto elettriche",
+   "ev_p": "Stazione di ricarica pubblica a Ploče, a circa 5 minuti in auto.",
+   "emerg_h": "Numeri di emergenza",
+   "emerg_labels": [
+    "Emergenza",
+    "Polizia",
+    "Vigili del fuoco",
+    "Ambulanza"
+   ],
+   "contact_h": "Contatti",
+   "closing_p": "Se il soggiorno ti è piaciuto, lascia una recensione su Airbnb o Booking.com. Per i prossimi soggiorni, chiedi la disponibilità direttamente a noi.",
+   "site_link": "Prenota direttamente su havenbay.eu"
+  },
+  "sl": {
+   "title": "Informacije za goste",
+   "sub": "Vse, kar potrebujete za bivanje",
+   "wifi_h": "Wi-Fi",
+   "network": "Omrežje",
+   "password": "Geslo",
+   "tv_h": "Televizija in TV v živo",
+   "tv_steps": [
+    "Na daljincu pritisnite HOME.",
+    "Odprite „IPTV Smarters“.",
+    "Izberite „Live TV“.",
+    "Izberite jezikovno kategorijo, nato kanal."
+   ],
+   "tv_note": "Gumb Nazaj vas vrne na seznam kanalov. Če se aplikacija zapre, ponovite korake. Kategorije: nemščina, angleščina, hrvaščina, italijanščina, francoščina, češčina, poljščina, madžarščina in druge.",
+   "apts_h": "Vaša nastanitev",
+   "studio_h": "Studio (Haven Bay 1)",
+   "apartment_h": "Apartma (Haven Bay 2)",
+   "studio_items": [
+    "Televizija in IPTV",
+    "Indukcijska kuhalna plošča",
+    "Cvrtnik na vroč zrak",
+    "Pralni stroj",
+    "Kavni aparat",
+    "Dva raztegljiva kavča (siv in okrasti)",
+    "LED svetlobni trakovi",
+    "USB polnilnik"
+   ],
+   "apartment_items": [
+    "Televizija in IPTV",
+    "Pralni stroj",
+    "Kavni aparat",
+    "Raztegljiv kavč"
+   ],
+   "house_h": "Hiša in zunanji prostor",
+   "house_items": [
+    "Brezplačno parkiranje pred hišo ob obali.",
+    "Teraso si delita oba apartmaja.",
+    "Ob močnem vetru zložite senčnik.",
+    "SUP deska z napisom Haven Bay je brezplačna za uporabo.",
+    "Žar lahko uporabljate. Po uporabi ga prosimo očistite."
+   ],
+   "rules_h": "Hišni red",
+   "checkin": "Prihod",
+   "checkout": "Odhod",
+   "quiet": "Čas miru",
+   "rules_items": [
+    "V nastanitvi ni dovoljeno kaditi.",
+    "Hišni ljubljenčki so dobrodošli."
+   ],
+   "ev_h": "Polnjenje električnih vozil",
+   "ev_p": "Javna polnilnica v Pločah, približno 5 minut vožnje.",
+   "emerg_h": "Številke za nujne primere",
+   "emerg_labels": [
+    "Klic v sili",
+    "Policija",
+    "Gasilci",
+    "Reševalci"
+   ],
+   "contact_h": "Kontakt",
+   "closing_p": "Če vam je bilo pri nas všeč, vas prosimo za oceno na Airbnb ali Booking.com. Za naslednje bivanje prosta termina preverite neposredno pri nas.",
+   "site_link": "Rezervirajte neposredno na havenbay.eu"
+  }
+ }
+}

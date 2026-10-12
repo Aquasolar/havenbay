@@ -1,6 +1,15 @@
 {
   "base_url": "https://www.havenbay.eu",
-  "languages": ["en", "de", "hr", "cs", "hu", "pl", "it", "sl"],
+  "languages": [
+    "en",
+    "de",
+    "hr",
+    "cs",
+    "hu",
+    "pl",
+    "it",
+    "sl"
+  ],
   "default_language": "en",
   "language_names": {
     "en": "English",
@@ -12,14 +21,15 @@
     "it": "Italiano",
     "sl": "Slovenščina"
   },
-  "contact_email": "",
+  "contact_email": "mediterranean.residence.mail@gmail.com",
   "contact_phone": "",
   "form_endpoint": "",
   "operator": {
     "name": "Mediterranean Residence d.o.o.",
-    "address": "Primorska 14 a, 20343 Rogotin, Croatia",
+    "address": "Ulica Prvog Svibnja 20, 21335 Podaca, Croatia",
     "oib": "67638718963",
     "register": "",
-    "director": ""
-  }
+    "director": "Ortwin Tischler"
+  },
+  "property_address": "Primorska 14 a, 20343 Rogotin, Croatia"
 }
