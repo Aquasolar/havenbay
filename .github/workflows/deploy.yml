@@ -38,6 +38,7 @@ jobs:
         env:
           ICAL_STUDIO: ${{ secrets.ICAL_STUDIO }}
           ICAL_APARTMENT: ${{ secrets.ICAL_APARTMENT }}
+          ICAL_ADMIN: ${{ secrets.ICAL_ADMIN }}
           ICAL_DIRECT_STUDIO: ${{ secrets.ICAL_DIRECT_STUDIO }}
           ICAL_DIRECT_APARTMENT: ${{ secrets.ICAL_DIRECT_APARTMENT }}
           PRICES_CSV_URL: ${{ secrets.PRICES_CSV_URL }}

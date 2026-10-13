@@ -3,6 +3,9 @@
 
 Die Feed-URLs stehen NICHT im Repository, sondern als GitHub-Secrets
 (ICAL_STUDIO, ICAL_APARTMENT; mehrere URLs durch Leerzeichen/Zeilenumbruch getrennt).
+Optional: ICAL_ADMIN (geheime iCal-Adresse des Admin-Kalenders; Direktbuchungen/Blockungen mit
+Titel "Studio · Direkt · Name" bzw. "Apartment · Blockiert · Grund" sperren die Einheit) sowie
+ICAL_DIRECT_STUDIO / ICAL_DIRECT_APARTMENT.
 Ausgegeben werden nur Datumsbereiche [Anreise, Abreise) - keine Gästedaten.
 """
 import csv, io, json, os, re, sys, urllib.request
@@ -46,6 +49,34 @@ def parse_ical(text):
             end = start + timedelta(days=1)
         ranges.append((start, end))
     return ranges
+
+
+ADMIN_RE = re.compile(r"^\s*(studio\s*\+\s*apartment|studio|apartment)\s*[·|:\-–]\s*(direkt|blockiert)\b", re.I)
+
+
+def parse_admin_ical(text):
+    """Liest den Admin-Kalender: nur Termine 'Studio|Apartment|Studio + Apartment · Direkt|Blockiert ...'.
+    Alle anderen Termine (Airbnb, Booking, Vorbereitung) werden ignoriert. Liefert {unit: [(start, end)]}."""
+    out = {"studio": [], "apartment": []}
+    for block in re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", unfold(text), re.S):
+        props = {}
+        for line in block.splitlines():
+            if ":" in line:
+                key, val = line.split(":", 1)
+                props[key.split(";")[0].upper()] = val
+        if props.get("STATUS", "").upper() == "CANCELLED":
+            continue
+        m = ADMIN_RE.match(props.get("SUMMARY", "").replace("\\,", ","))
+        start = parse_date(props.get("DTSTART", ""))
+        if not m or not start:
+            continue
+        end = parse_date(props.get("DTEND", ""))
+        if not end or end <= start:
+            end = start + timedelta(days=1)
+        unit = m.group(1).lower().replace(" ", "")
+        for u in (("studio", "apartment") if "+" in unit else (unit,)):
+            out[u].append((start, end))
+    return out
 
 
 def merge(ranges, today):
@@ -155,6 +186,14 @@ def main(out_path):
     result = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "units": {}}
     exports = {}
     failed = False
+    admin = {"studio": [], "apartment": []}
+    admin_url = os.environ.get("ICAL_ADMIN", "").strip()
+    if admin_url:  # optional: geheime iCal-Adresse des Kalenders "Haven Bay Admin"
+        try:
+            admin = parse_admin_ical(fetch(admin_url))
+        except Exception as exc:
+            print(f"FEHLER: Admin-Kalender nicht ladbar ({type(exc).__name__}).", file=sys.stderr)
+            failed = True
     for unit, env in UNITS.items():
         urls = os.environ.get(env, "").split()
         if not urls:
@@ -168,7 +207,7 @@ def main(out_path):
             except Exception as exc:  # URL nie ausgeben
                 print(f"FEHLER: {unit} Feed {i} nicht ladbar ({type(exc).__name__}).", file=sys.stderr)
                 failed = True
-        direct_ranges = []
+        direct_ranges = list(admin[unit])
         for i, url in enumerate(os.environ.get(DIRECT[unit], "").split(), 1):
             try:
                 direct_ranges += parse_ical(fetch(url))

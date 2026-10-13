@@ -67,6 +67,18 @@ class T2(unittest.TestCase):
         self.assertNotIn("2027-05-01", d["units"]["studio"])
         self.assertEqual(d["units"]["studio"]["2027-05-02"], 71)
 
+    def test_admin_calendar_only_direct_and_blocked(self):
+        def ev(summary, a, b):
+            return f"BEGIN:VEVENT\nDTSTART;VALUE=DATE:{a}\nDTEND;VALUE=DATE:{b}\nSUMMARY:{summary}\nEND:VEVENT\n"
+        txt = ("BEGIN:VCALENDAR\n" + ev("Studio · Direkt · Müller", "20270803", "20270814")
+               + ev("Apartment - Blockiert - Reparatur", "20270820", "20270830")
+               + ev("Studio + Apartment · direkt · Familie", "20271001", "20271004")
+               + ev("Studio · Booking · Eva G. · 2 Nächte", "20270101", "20270103")
+               + ev("Vorbereitung · Studio", "20270105", "20270106") + "END:VCALENDAR\n")
+        r = s.parse_admin_ical(txt)
+        self.assertEqual(r["studio"], [(date(2027, 8, 3), date(2027, 8, 14)), (date(2027, 10, 1), date(2027, 10, 4))])
+        self.assertEqual(r["apartment"], [(date(2027, 8, 20), date(2027, 8, 30)), (date(2027, 10, 1), date(2027, 10, 4))])
+
     def test_ical_blocks_no_guest_data(self):
         out = s.ical_blocks([(date(2027, 1, 13), date(2027, 1, 14))], "studio")
         self.assertIn("DTSTART;VALUE=DATE:20270113", out)

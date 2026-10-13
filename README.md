@@ -77,7 +77,7 @@ Preise pro Nacht lassen sich für einzelne Tage oder Zeiträume festlegen (z. B.
 
 Die Sperre gilt für die Website. Damit auch Booking sie berücksichtigt, erzeugt die Synchronisation pro Unterkunft eine iCal-Datei mit Direktbuchungen und Reinigungstagen (keine Buchungen der Plattformen): `https://www.havenbay.eu/ical/<ICAL_EXPORT_TOKEN>/studio.ics` und `.../apartment.ics`. Diese Links bei Booking und Airbnb als zusätzlichen Kalender importieren (sofern die Plattform den Import anbietet). Airbnb kann Vorbereitungszeiten auch selbst einstellen.
 
-Optionale Secrets: `ICAL_DIRECT_STUDIO`, `ICAL_DIRECT_APARTMENT` (iCal-Links der Google-Kalender mit Direktbuchungen), `ICAL_EXPORT_TOKEN` (zufällige Zeichenfolge, mindestens 20 Zeichen).
+Optionale Secrets: `ICAL_ADMIN` (geheime iCal-Adresse des Admin-Kalenders; Termine "Studio · Direkt · Name", "Apartment · Blockiert · Grund" oder "Studio + Apartment · Direkt · Name" sperren die Einheit), `ICAL_DIRECT_STUDIO`, `ICAL_DIRECT_APARTMENT` (iCal-Links der Google-Kalender mit Direktbuchungen), `ICAL_EXPORT_TOKEN` (zufällige Zeichenfolge, mindestens 20 Zeichen).
 
 ## Fotos
 
