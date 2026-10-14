@@ -1,6 +1,6 @@
 {
   "currency": "EUR",
-  "confirmed": false,
+  "confirmed": true,
   "_hinweis": "Basis: Airbnb-Einstellungen (Basispreis Winter, Vor-/Nachsaison +50 %, Hochsaison +100 %). Die Saisonzeiträume sind ANNAHMEN (Mai/Juni Vorsaison, Juli/August Hochsaison, Sept/Okt Nachsaison, Nov–Apr Winter) und müssen mit Airbnb abgeglichen werden. Dann confirmed auf true setzen. null bedeutet: auf Anfrage.",
   "units": {
     "studio": {
