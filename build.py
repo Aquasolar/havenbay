@@ -309,6 +309,7 @@ def rates_section(site, ui):
 <p class="muted">{esc(ui["monthly_p"])} {esc(ui["direct_note"])}</p>
 <div class="rate-grid">{''.join(cards)}</div>
 <p class="muted">{fees_text(site, ui)}</p>
+<p class="muted">{esc(ui["pay_p"])}</p>
 <a class="btn" href="#booking">{esc(ui["btn_check"])}</a>
 </div>
 </section>"""
@@ -425,6 +426,7 @@ def page_unit(site, lang, unit):
 <p>{esc(ui["monthly_p"])}</p>
 <p><strong>{esc(monthly_text(site, ui, unit))}</strong></p>
 <p class="muted">{fees_text(site, ui)}</p>
+<p class="muted">{esc(ui["pay_p"])}</p>
 </div>
 </div>
 </section>
