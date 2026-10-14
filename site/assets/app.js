@@ -28,10 +28,12 @@
   function isWinter(rules, inD) {
     return !!(rules && rules.winter_months && rules.winter_months.indexOf(Number(inD.slice(5, 7))) >= 0);
   }
-  // Mindestaufenthalt: im Winter ggf. länger
+  // Mindestaufenthalt: im Winter ggf. länger (eigene Monatsliste min_nights_months, sonst winter_months)
   function minStay(unit, inD) {
     var r = unit.rules;
-    if (r && r.winter_min_nights && isWinter(r, inD)) return Math.max(unit.min_stay || 1, r.winter_min_nights);
+    var months = r && (r.min_nights_months || r.winter_months);
+    var hit = !!(months && months.indexOf(Number(inD.slice(5, 7))) >= 0);
+    if (r && r.winter_min_nights && hit) return Math.max(unit.min_stay || 1, r.winter_min_nights);
     return unit.min_stay || 1;
   }
   // Preis: pro Nacht nach Monat oder Tagespreis; ab 28 Nächten Monatspreis (pro 30 Nächte), wenn gültig;

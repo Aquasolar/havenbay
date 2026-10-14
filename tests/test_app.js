@@ -32,3 +32,11 @@ assert.deepStrictEqual([q.discount, q.extra, q.total], [0, 0, 354 + 30]);
 assert.strictEqual(a.minStay(u3, '2027-01-10'), 7);
 assert.strictEqual(a.minStay(u3, '2027-07-10'), 2);
 console.log('fees tests ok');
+// Eigene Monatsliste für den Mindestaufenthalt (Mai zählt mit, Wochenrabatt nicht)
+const r2 = Object.assign({}, rules, { winter_min_nights: 3, min_nights_months: [11,12,1,2,3,4,5] });
+const u4 = { min_stay: 2, rules: r2, nightly: { '1': 59 }, monthly: null };
+assert.strictEqual(a.minStay(u4, '2027-05-20'), 3);
+assert.strictEqual(a.minStay(u4, '2027-01-10'), 3);
+assert.strictEqual(a.minStay(u4, '2027-06-01'), 2);
+assert.strictEqual(a.isWinter(r2, '2027-05-20'), false);
+console.log('min stay months ok');

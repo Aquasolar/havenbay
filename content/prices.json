@@ -61,6 +61,15 @@
       3,
       4
     ],
-    "winter_min_nights": 7
+    "winter_min_nights": 3,
+    "min_nights_months": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
   }
 }
