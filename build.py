@@ -435,10 +435,12 @@ def page_unit(site, lang, unit):
 {tail(site, lang, ui)}"""
 
 
-def photo_credit(p):
+def photo_credit(p, ui=None):
     ph = p.get("photo")
     if not ph:
         return ""
+    if ph.get("ai"):
+        return f'<span class="credit">{esc((ui or {}).get("symbol_img", "Illustrative image"))}</span>'
     return (f'<a class="credit" href="{esc(ph["src"])}" target="_blank" rel="noopener license">'
             f'Foto: {esc(ph["credit"])}</a>')
 
@@ -455,7 +457,7 @@ def place_card(site, lang, ui, p, badge=""):
         links.append(f'<a href="tel:{esc(tel)}">{esc(p["phone"])}</a>')
     badge_html = f'<span class="badge">{esc(badge)}</span>' if badge else ""
     return f"""<article class="place" id="{esc(p['id'])}">
-{img_slot(f"../assets/img/todo/{p['id']}.jpg", alt=p['name'])}{photo_credit(p)}
+{img_slot(f"../assets/img/todo/{p['id']}.jpg", alt=p['name'])}{photo_credit(p, ui)}
 <div class="place-body">
 {badge_html}<h3>{esc(p['name'])}</h3>
 <p>{esc(desc)}</p>
