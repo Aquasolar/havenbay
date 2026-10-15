@@ -196,6 +196,8 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .places { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.2rem; }
 .place { background: var(--white); border: 1px solid var(--silt); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
 .place .ph { aspect-ratio: 3 / 2; }
+.place .credit { display: block; padding: 0.25rem 1.1rem 0; font-size: 0.68rem; line-height: 1.3; color: #6b7a78; text-decoration: none; }
+.place .credit:hover, .place .credit:focus-visible { text-decoration: underline; }
 .place-body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
 .place h3 { font-size: 1.15rem; margin-bottom: 0.3em; }
 .place p { font-size: var(--step--1); color: var(--dusk); margin-bottom: 0.8rem; }
