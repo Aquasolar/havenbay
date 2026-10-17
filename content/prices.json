@@ -50,6 +50,7 @@
     "cleaning_fee": 30,
     "extra_guest_fee": 12,
     "extra_guest_from": 3,
+    "extra_guest_monthly": 30,
     "weekly_from_nights": 7,
     "weekly_discount_winter": 30,
     "weekly_discount_season": 10,

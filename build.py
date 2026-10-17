@@ -387,7 +387,8 @@ def fees_text(site, ui):
         return ""
     c = site.currency
     return esc(ui["fees_p"].format(c=f'{c} {r["cleaning_fee"]}', e=f'{c} {r["extra_guest_fee"]}',
-               w=r["weekly_discount_winter"], s=r["weekly_discount_season"], n=r["winter_min_nights"]))
+               w=r["weekly_discount_winter"], s=r["weekly_discount_season"], n=r["winter_min_nights"])
+               + (" " + ui["fees_monthly"].format(m=f'{c} {r["extra_guest_monthly"]}') if r.get("extra_guest_monthly") is not None else ""))
 
 
 def monthly_text(site, ui, unit):

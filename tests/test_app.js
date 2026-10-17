@@ -40,3 +40,13 @@ assert.strictEqual(a.minStay(u4, '2027-01-10'), 3);
 assert.strictEqual(a.minStay(u4, '2027-06-01'), 2);
 assert.strictEqual(a.isWinter(r2, '2027-05-20'), false);
 console.log('min stay months ok');
+// Monatsmiete: Zusatzgäste pauschal 30 €/Monat (anteilig), unabhängig von der Zahl der Zusatzgäste
+const rulesM = Object.assign({}, rules, { extra_guest_monthly: 30 });
+const uM = { rules: rulesM, nightly: { '1': 62 }, monthly: { price: 690, valid_until: '2027-05-31' } };
+q = a.quote(uM, '2027-01-01', '2027-01-31', 4);
+assert.deepStrictEqual([q.mode, q.base, q.extra, q.total], ['monthly', 690, 30, 750]);
+q = a.quote(uM, '2027-01-01', '2027-01-31', 2);
+assert.strictEqual(q.total, 720);
+q = a.quote(uM, '2027-01-01', '2027-02-15', 3);   // 45 Nächte
+assert.deepStrictEqual([q.base, q.extra, q.total], [1035, 45, 1110]);
+console.log('monthly extra guest ok');

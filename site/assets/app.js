@@ -42,11 +42,13 @@
     var nights = nightsBetween(inD, outD);
     var r = unit.rules || {};
     var cleaning = r.cleaning_fee || 0;
-    var extra = 0;
-    if (r.extra_guest_fee && guests >= (r.extra_guest_from || 3)) extra = (guests - (r.extra_guest_from || 3) + 1) * r.extra_guest_fee * nights;
+    var extra = 0, from = r.extra_guest_from || 3;
     var m = unit.monthly, base, discount = 0, mode;
     if (nights >= 28 && m && typeof m.price === 'number' && outD <= addDays(m.valid_until, 1)) {
       base = Math.round(m.price * nights / 30); mode = 'monthly';
+      // Monatsmiete: Zusatzgäste pauschal pro Monat (anteilig), sonst pro Person und Nacht
+      if (guests >= from && typeof r.extra_guest_monthly === 'number') extra = Math.round(r.extra_guest_monthly * nights / 30);
+      else if (r.extra_guest_fee && guests >= from) extra = (guests - from + 1) * r.extra_guest_fee * nights;
     } else {
       base = 0; mode = 'nightly';
       for (var t = toUTC(inD); t < toUTC(outD); t += DAY) {
@@ -60,6 +62,7 @@
         var pct = isWinter(r, inD) ? r.weekly_discount_winter : r.weekly_discount_season;
         discount = Math.round(base * (pct || 0) / 100);
       }
+      if (r.extra_guest_fee && guests >= from) extra = (guests - from + 1) * r.extra_guest_fee * nights;
     }
     return { nights: nights, total: base - discount + cleaning + extra, mode: mode, base: base, discount: discount, cleaning: cleaning, extra: extra };
   }
