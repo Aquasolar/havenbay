@@ -711,6 +711,12 @@ def build(args):
         shutil.copyfile(args.daily, out / "daily-prices.json")
     else:
         write(out / "daily-prices.json", json.dumps({"units": {"studio": {}, "apartment": {}}, "events": []}))
+    # Master-Preise öffentlich lesbar (für die tägliche Preisprüfung Airbnb/Booking)
+    pub = {k: v for k, v in site.prices.items() if not k.startswith("_")}
+    pub["source"] = "havenbay.eu – Master-Preise der Website (pro Nacht nach Monat, Monatspreis, Regeln)"
+    if getattr(site, "daily", None):
+        pub["daily_overrides"] = site.daily.get("units", {})
+    write(out / "prices.json", json.dumps(pub, ensure_ascii=False, indent=1))
     if args.ical_dir and Path(args.ical_dir).exists():
         shutil.copytree(args.ical_dir, out / "ical")
     avail = Path(args.availability) if args.availability else None
