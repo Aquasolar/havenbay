@@ -458,7 +458,7 @@ def place_card(site, lang, ui, p, badge=""):
         links.append(f'<a href="tel:{esc(tel)}">{esc(p["phone"])}</a>')
     badge_html = f'<span class="badge">{esc(badge)}</span>' if badge else ""
     return f"""<article class="place" id="{esc(p['id'])}">
-{img_slot(f"../assets/img/todo/{p['id']}.jpg", alt=p['name'])}{photo_credit(p, ui)}
+{img_slot(f"../assets/img/todo/{p['id']}.jpg", alt=p['name']) if (ROOT / "site/assets/img/todo" / f"{p['id']}.jpg").exists() else '<div class="ph"></div>'}{photo_credit(p, ui) if (ROOT / "site/assets/img/todo" / f"{p['id']}.jpg").exists() else ""}
 <div class="place-body">
 {badge_html}<h3>{esc(p['name'])}</h3>
 <p>{esc(desc)}</p>

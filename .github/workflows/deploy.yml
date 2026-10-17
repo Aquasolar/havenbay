@@ -30,10 +30,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Tests
+      - name: Tests Ebene 1 (Rechenlogik, Plausibilität, Kalender)
         run: |
+          python -m pip install --quiet pillow
           python tests/test_sync.py
           node tests/test_app.js
+          node tests/test_plausibility.js
+      - name: Tests Ebene 2 (Browser-Test mit Beispielkalender)
+        if: github.event_name != 'schedule'
+        run: |
+          python build.py --availability tests/fixtures/availability.json --out build/e2e-dist
+          python tests/test_dist.py build/e2e-dist
+          npm install --no-save --no-audit --no-fund playwright@1.56.0
+          npx playwright install --with-deps chromium
+          node tests/e2e.js build/e2e-dist
       - name: Kalender abgleichen
         env:
           ICAL_STUDIO: ${{ secrets.ICAL_STUDIO }}
@@ -46,6 +56,10 @@ jobs:
         run: python scripts/sync_availability.py build/availability.json
       - name: Seite erzeugen
         run: python build.py --availability build/availability.json --daily build/daily-prices.json --ical-dir build/ical --out dist
+      - name: Prüfung der fertigen Seite (Bilder, Links, keine geheimen Links)
+        env:
+          ICAL_EXPORT_TOKEN: ${{ secrets.ICAL_EXPORT_TOKEN }}
+        run: python tests/test_dist.py dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

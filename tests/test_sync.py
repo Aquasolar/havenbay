@@ -84,6 +84,25 @@ class T2(unittest.TestCase):
         self.assertIn("DTSTART;VALUE=DATE:20270113", out)
         self.assertNotIn("Reserved", out)
 
+    def test_feed_down_keeps_last_state(self):
+        """K5: fällt ein Feed aus, bricht der Abgleich ab (alte Seite bleibt online), nichts wird geschrieben, keine URL im Protokoll."""
+        import io, os, tempfile, contextlib
+        from unittest import mock
+        secret = "https://example.invalid/geheim-token-123.ics"
+        def fake_fetch(url):
+            if url == secret:
+                raise OSError("down")
+            return ICS
+        env = {"ICAL_STUDIO": secret, "ICAL_APARTMENT": "https://example.invalid/ok.ics", "ICAL_ADMIN": "", "PRICES_CSV_URL": ""}
+        with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, env), mock.patch.object(s, "fetch", fake_fetch):
+            out = os.path.join(d, "availability.json")
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err), contextlib.redirect_stdout(io.StringIO()):
+                rc = s.main(out)
+            self.assertEqual(rc, 1)
+            self.assertFalse(os.path.exists(out))
+            self.assertNotIn("geheim", err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
