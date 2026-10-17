@@ -251,7 +251,7 @@
       nightsEl.textContent = ok ? String(nightsBetween(state.start, state.end)) : '–';
       var priceNote = '';
       if (ok) {
-        var q = quote(u, state.start, state.end);
+        var q = quote(u, state.start, state.end, Number(guestsSel.value) || 1);
         if (q.total == null) { totalEl.textContent = ui.on_request; priceNote = ui.est_none; }
         else { totalEl.textContent = D.currency_symbol + ' ' + q.total; priceNote = ui.est_note; }
         if (!hintEl.classList.contains('is-error')) setHint(priceNote);
