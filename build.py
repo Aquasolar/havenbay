@@ -721,8 +721,9 @@ def build(args):
     for u in UNITS:
         pub["units"][u]["min_stay"] = site.units[u]["min_stay"]
         pub["units"][u]["max_guests"] = site.units[u]["max_guests"]
-    pub.setdefault("policies", {})["checkin"] = guest.get("checkin")
-    pub["policies"]["checkout"] = guest.get("checkout")
+    pub.setdefault("policies", {})["checkin"] = guest.get("times", {}).get("checkin")
+    pub["policies"]["checkout"] = guest.get("times", {}).get("checkout")
+    pub["policies"]["quiet_hours"] = guest.get("times", {}).get("quiet")
     pub["policies"]["cleaning_buffer"] = {"weekdays_mon0": ops["cleaning_buffer"]["weekdays"],
         "rule": "Abreise Mo-Fr: Nacht des Abreisetags gesperrt (Reinigung)"}
     pub["rules_explained"] = {
