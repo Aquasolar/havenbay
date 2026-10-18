@@ -72,5 +72,58 @@
       4,
       5
     ]
+  },
+  "policies": {
+    "bookable_until": "2027-05-31",
+    "bookable_note": "Ab 01.06.2027 gesperrt, bis die Preise für 2027/28 geprüft sind.",
+    "payment": {
+      "deposit_pct": 30,
+      "deposit_due_days": 7,
+      "balance_days_before_arrival": 14,
+      "short_notice_days": 21,
+      "short_notice_rule": "Anreise in weniger als 21 Tagen: Gesamtbetrag sofort",
+      "methods": [
+        "SEPA-Überweisung",
+        "Karte per Zahlungslink"
+      ]
+    },
+    "cancellation": {
+      "standard": [
+        {
+          "days_before_arrival_min": 30,
+          "fee_pct": 0,
+          "note": "kostenlos, Anzahlung wird erstattet"
+        },
+        {
+          "days_before_arrival_min": 14,
+          "fee_pct": 30,
+          "note": "Anzahlung bleibt einbehalten"
+        },
+        {
+          "days_before_arrival_min": 0,
+          "fee_pct": 100,
+          "note": "unter 14 Tagen oder Nichterscheinen"
+        }
+      ],
+      "monthly": {
+        "from_nights": 28,
+        "rules": [
+          {
+            "days_before_arrival_min": 30,
+            "fee_pct": 30,
+            "note": "Anzahlung nicht erstattbar"
+          },
+          {
+            "days_before_arrival_min": 0,
+            "fee_pct": 100,
+            "note": "unter 30 Tagen vor Anreise"
+          }
+        ]
+      }
+    },
+    "house": {
+      "smoking": false,
+      "pets": true
+    }
   }
 }

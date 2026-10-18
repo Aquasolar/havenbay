@@ -310,6 +310,7 @@ def rates_section(site, ui):
 <div class="rate-grid">{''.join(cards)}</div>
 <p class="muted">{fees_text(site, ui)}</p>
 <p class="muted">{esc(ui["pay_p"])}</p>
+<p class="muted">{esc(ui["cancel_p"])}</p>
 <a class="btn" href="#booking">{esc(ui["btn_check"])}</a>
 </div>
 </section>"""
@@ -428,6 +429,7 @@ def page_unit(site, lang, unit):
 <p><strong>{esc(monthly_text(site, ui, unit))}</strong></p>
 <p class="muted">{fees_text(site, ui)}</p>
 <p class="muted">{esc(ui["pay_p"])}</p>
+<p class="muted">{esc(ui["cancel_p"])}</p>
 </div>
 </div>
 </section>
@@ -714,6 +716,22 @@ def build(args):
     # Master-Preise öffentlich lesbar (für die tägliche Preisprüfung Airbnb/Booking)
     pub = {k: v for k, v in site.prices.items() if not k.startswith("_")}
     pub["source"] = "havenbay.eu – Master-Preise der Website (pro Nacht nach Monat, Monatspreis, Regeln)"
+    guest = json.loads((ROOT / "content/guest.json").read_text(encoding="utf-8"))
+    ops = json.loads((ROOT / "content/operations.json").read_text(encoding="utf-8"))
+    for u in UNITS:
+        pub["units"][u]["min_stay"] = site.units[u]["min_stay"]
+        pub["units"][u]["max_guests"] = site.units[u]["max_guests"]
+    pub.setdefault("policies", {})["checkin"] = guest.get("checkin")
+    pub["policies"]["checkout"] = guest.get("checkout")
+    pub["policies"]["cleaning_buffer"] = {"weekdays_mon0": ops["cleaning_buffer"]["weekdays"],
+        "rule": "Abreise Mo-Fr: Nacht des Abreisetags gesperrt (Reinigung)"}
+    pub["rules_explained"] = {
+        "min_stay": "units.<einheit>.min_stay Nächte; bei Anreise in rules.min_nights_months mindestens rules.winter_min_nights",
+        "monthly": "ab 28 Nächten units.<einheit>.monthly.price je 30 Nächte (anteilig), gültig bis valid_until",
+        "weekly_discount": "ab rules.weekly_from_nights Nächten: rules.weekly_discount_winter % (Anreise in winter_months) sonst weekly_discount_season %",
+        "extra_guests": "ab rules.extra_guest_from Gästen je Zusatzgast rules.extra_guest_fee pro Nacht; bei Monatsmiete pauschal rules.extra_guest_monthly pro 30 Nächte",
+        "cleaning": "rules.cleaning_fee einmal pro Aufenthalt",
+        "daily_overrides": "Tagespreis ersetzt den Monatswert für diese Nacht"}
     if getattr(site, "daily", None):
         pub["daily_overrides"] = site.daily.get("units", {})
     write(out / "prices.json", json.dumps(pub, ensure_ascii=False, indent=1))
