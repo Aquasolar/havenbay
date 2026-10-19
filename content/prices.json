@@ -51,6 +51,7 @@
     "extra_guest_fee": 12,
     "extra_guest_from": 3,
     "extra_guest_monthly": 30,
+    "pet_fee": 10,
     "weekly_from_nights": 7,
     "weekly_discount_winter": 30,
     "weekly_discount_season": 10,
@@ -123,7 +124,8 @@
     },
     "house": {
       "smoking": false,
-      "pets": true
+      "pets": true,
+      "pet_fee_note": "Haustiere willkommen, 10 € pro Aufenthalt (Booking.com kann das nicht abbilden)"
     }
   }
 }

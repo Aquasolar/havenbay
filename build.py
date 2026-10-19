@@ -389,7 +389,8 @@ def fees_text(site, ui):
     c = site.currency
     return esc(ui["fees_p"].format(c=f'{c} {r["cleaning_fee"]}', e=f'{c} {r["extra_guest_fee"]}',
                w=r["weekly_discount_winter"], s=r["weekly_discount_season"], n=r["winter_min_nights"])
-               + (" " + ui["fees_monthly"].format(m=f'{c} {r["extra_guest_monthly"]}') if r.get("extra_guest_monthly") is not None else ""))
+               + (" " + ui["fees_monthly"].format(m=f'{c} {r["extra_guest_monthly"]}') if r.get("extra_guest_monthly") is not None else "")
+               + (" " + ui["fees_pet"].format(p=f'{c} {r["pet_fee"]}') if r.get("pet_fee") is not None else ""))
 
 
 def monthly_text(site, ui, unit):
@@ -732,6 +733,7 @@ def build(args):
         "weekly_discount": "ab rules.weekly_from_nights Nächten: rules.weekly_discount_winter % (Anreise in winter_months) sonst weekly_discount_season %",
         "extra_guests": "ab rules.extra_guest_from Gästen je Zusatzgast rules.extra_guest_fee pro Nacht; bei Monatsmiete pauschal rules.extra_guest_monthly pro 30 Nächte",
         "cleaning": "rules.cleaning_fee einmal pro Aufenthalt",
+        "pets": "Haustiere willkommen, rules.pet_fee einmal pro Aufenthalt (nicht im Online-Richtpreis enthalten)",
         "daily_overrides": "Tagespreis ersetzt den Monatswert für diese Nacht"}
     if getattr(site, "daily", None):
         pub["daily_overrides"] = site.daily.get("units", {})
