@@ -1,53 +1,73 @@
 {
   "currency": "EUR",
   "confirmed": true,
-  "_hinweis": "Basis: Airbnb-Einstellungen (Basispreis Winter, Vor-/Nachsaison +50 %, Hochsaison +100 %). Die Saisonzeiträume sind ANNAHMEN (Mai/Juni Vorsaison, Juli/August Hochsaison, Sept/Okt Nachsaison, Nov–Apr Winter) und müssen mit Airbnb abgeglichen werden. Dann confirmed auf true setzen. null bedeutet: auf Anfrage.",
+  "_hinweis": "Basis: Airbnb-Einstellungen (Basispreis Winter, Vor-/Nachsaison +50 %, Hochsaison +100 %). Die Saisonzeiträume sind ANNAHMEN (Mai/Juni Vorsaison, Juli/August Hochsaison, Sept/Okt Nachsaison, Nov–Apr Winter) und müssen mit Airbnb abgeglichen werden. Dann confirmed auf true setzen. null bedeutet: auf Anfrage. STAND 19.10.2026: Direktpreise sind Endpreise inkl. Reinigung (Brutto). nightly = Preis pro Nacht, weekly = Preis für 7 Nächte (ab 7 Nächten anteilig je Nacht), monthly unverändert.",
   "units": {
     "studio": {
       "nightly": {
-        "1": 59,
-        "2": 59,
-        "3": 59,
-        "4": 59,
-        "5": 89,
+        "1": 65,
+        "2": 65,
+        "3": 65,
+        "4": 75,
+        "5": 75,
         "6": 89,
         "7": 118,
         "8": 118,
         "9": 89,
-        "10": 89,
-        "11": 59,
-        "12": 59
+        "10": 65,
+        "11": 65,
+        "12": 65
       },
       "monthly": {
         "price": 620,
         "valid_until": "2027-05-31"
       },
-      "base": 59
+      "base": 65,
+      "weekly": {
+        "10": 400,
+        "11": 400,
+        "12": 400,
+        "1": 400,
+        "2": 400,
+        "3": 400,
+        "4": 450,
+        "5": 450
+      }
     },
     "apartment": {
       "nightly": {
-        "1": 62,
-        "2": 62,
-        "3": 62,
-        "4": 62,
-        "5": 93,
+        "1": 70,
+        "2": 70,
+        "3": 70,
+        "4": 80,
+        "5": 80,
         "6": 93,
         "7": 124,
         "8": 124,
         "9": 93,
-        "10": 93,
-        "11": 62,
-        "12": 62
+        "10": 70,
+        "11": 70,
+        "12": 70
       },
       "monthly": {
         "price": 690,
         "valid_until": "2027-05-31"
       },
-      "base": 62
+      "base": 70,
+      "weekly": {
+        "10": 450,
+        "11": 450,
+        "12": 450,
+        "1": 450,
+        "2": 450,
+        "3": 450,
+        "4": 500,
+        "5": 500
+      }
     }
   },
   "rules": {
-    "cleaning_fee": 30,
+    "cleaning_fee": 0,
     "extra_guest_fee": 12,
     "extra_guest_from": 3,
     "extra_guest_monthly": 30,
@@ -72,7 +92,8 @@
       3,
       4,
       5
-    ]
+    ],
+    "cleaning_included": true
   },
   "policies": {
     "bookable_until": "2027-05-31",

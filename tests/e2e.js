@@ -12,14 +12,14 @@ const LANGS = ['en', 'de', 'hr', 'cs', 'hu', 'pl', 'it', 'sl'];
 
 // Sollbeträge: siehe Testplan (Abschnitt Preis). Bei Preisänderungen hier anpassen.
 const PRICE_CASES = [
-  ['P1', 'studio', '2027-01-10', '2027-01-13', 2, 207],
-  ['P2', 'studio', '2027-01-10', '2027-01-13', 3, 243],
-  ['P3', 'apartment', '2027-02-01', '2027-02-08', 2, 334],
-  ['P4', 'apartment', '2027-02-01', '2027-02-08', 4, 502],
-  ['P5', 'studio', '2026-10-30', '2026-11-02', 2, 267],
-  ['P6', 'apartment', '2027-01-01', '2027-01-31', 2, 720],
-  ['P7', 'apartment', '2027-01-01', '2027-01-31', 4, 750],
-  ['P8', 'studio', '2027-02-01', '2027-03-01', 3, 637],
+  ['P1', 'studio', '2027-01-10', '2027-01-13', 2, 195],
+  ['P2', 'studio', '2027-01-10', '2027-01-13', 3, 231],
+  ['P3', 'apartment', '2027-02-01', '2027-02-08', 2, 450],
+  ['P4', 'apartment', '2027-02-01', '2027-02-08', 4, 618],
+  ['P5', 'studio', '2026-10-30', '2026-11-02', 2, 195],
+  ['P6', 'apartment', '2027-01-01', '2027-01-31', 2, 690],
+  ['P7', 'apartment', '2027-01-01', '2027-01-31', 4, 720],
+  ['P8', 'studio', '2027-02-01', '2027-03-01', 3, 607],
 ];
 
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
@@ -139,7 +139,7 @@ async function pick(page, unit, a, b, guests) {
       check(`I1-${lang}`, !/\{[a-z_]+\}/.test(r.text) && !/undefined|NaN/.test(r.text), 'offener Platzhalter, undefined oder NaN im Text');
       check(`I7-${lang}`, r.sw <= 392, `seitliches Scrollen: Breite ${r.sw}px`);
       await pick(m.page, 'apartment', '2027-01-01', '2027-01-31', 4);
-      check(`P7-${lang}`, euros(await m.page.textContent('#sum-total')) === 750, 'Preis in dieser Sprache abweichend');
+      check(`P7-${lang}`, euros(await m.page.textContent('#sum-total')) === 720, 'Preis in dieser Sprache abweichend');
       check(`JS-${lang}`, m.errors.length === 0, m.errors.join(' | '));
       await m.ctx.close();
     }

@@ -8,7 +8,7 @@ const units = U.units || U;
 const ALLOWED_DROP_AT = [P.rules.weekly_from_nights, 28];
 let n = 0, bad = [];
 for (const name of ['studio', 'apartment']) {
-  const unit = { rules: P.rules, nightly: P.units[name].nightly, monthly: P.units[name].monthly };
+  const unit = { rules: P.rules, nightly: P.units[name].nightly, monthly: P.units[name].monthly, weekly: P.units[name].weekly };
   const max = units[name].max_guests;
   for (let d = '2026-10-17'; d <= '2027-05-30'; d = a.addDays(d, 1)) {
     let prevTotal = null;

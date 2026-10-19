@@ -59,8 +59,14 @@
         base += p;
       }
       if (r.weekly_from_nights && nights >= r.weekly_from_nights) {
-        var pct = isWinter(r, inD) ? r.weekly_discount_winter : r.weekly_discount_season;
-        discount = Math.round(base * (pct || 0) / 100);
+        // Wochenpreis (Endpreis für 7 Nächte, Monat der Anreise), jede weitere Nacht anteilig; sonst prozentualer Wochenrabatt
+        var wk = unit.weekly ? unit.weekly[String(new Date(toUTC(inD)).getUTCMonth() + 1)] : null;
+        if (typeof wk === 'number') {
+          discount = Math.max(0, base - Math.round(wk * nights / r.weekly_from_nights));
+        } else {
+          var pct = isWinter(r, inD) ? r.weekly_discount_winter : r.weekly_discount_season;
+          discount = Math.round(base * (pct || 0) / 100);
+        }
       }
       if (r.extra_guest_fee && guests >= from) extra = (guests - from + 1) * r.extra_guest_fee * nights;
     }
@@ -361,7 +367,8 @@
         var th = doc.createElement('th'); th.scope = 'row'; th.textContent = monthName.format(new Date(Date.UTC(2026, m - 1, 1)));
         th.style.textTransform = 'capitalize';
         var td = doc.createElement('td'); var p = u.nightly[String(m)];
-        td.textContent = typeof p === 'number' ? D.currency_symbol + ' ' + p + ' ' + ui.per_night : ui.on_request;
+        var wkp = u.weekly ? u.weekly[String(m)] : null;
+        td.textContent = typeof p === 'number' ? D.currency_symbol + ' ' + p + ' ' + ui.per_night + (typeof wkp === 'number' ? ' · ' + D.currency_symbol + ' ' + wkp + ' ' + ui.per_week : '') : ui.on_request;
         tr.appendChild(th); tr.appendChild(td); table.appendChild(tr);
       }
       host.appendChild(table);

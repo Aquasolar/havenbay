@@ -50,3 +50,16 @@ assert.strictEqual(q.total, 720);
 q = a.quote(uM, '2027-01-01', '2027-02-15', 3);   // 45 Nächte
 assert.deepStrictEqual([q.base, q.extra, q.total], [1035, 45, 1110]);
 console.log('monthly extra guest ok');
+
+// Bruttopreise 19.10.2026: Wochenpreis (Endpreis 7 Nächte, Monat der Anreise), weitere Nächte anteilig, keine Extra-Reinigung
+{
+  const P = require('../content/prices.json');
+  const mk = n => ({ rules: P.rules, nightly: P.units[n].nightly, monthly: P.units[n].monthly, weekly: P.units[n].weekly });
+  let q = a.quote(mk('studio'), '2027-01-10', '2027-01-11', 2); assert.strictEqual(q.total, 65);
+  q = a.quote(mk('studio'), '2027-01-10', '2027-01-17', 2); assert.strictEqual(q.total, 400);
+  q = a.quote(mk('studio'), '2027-01-10', '2027-01-18', 2); assert.strictEqual(q.total, 457);
+  q = a.quote(mk('apartment'), '2027-04-05', '2027-04-12', 2); assert.strictEqual(q.total, 500);
+  q = a.quote(mk('apartment'), '2027-04-05', '2027-04-07', 2); assert.strictEqual(q.total, 160);
+  q = a.quote(mk('apartment'), '2027-03-30', '2027-04-02', 2); assert.strictEqual(q.total, 70 + 70 + 80);
+  console.log('gross weekly prices ok');
+}

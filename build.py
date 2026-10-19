@@ -252,6 +252,7 @@ def page_data(site, lang, ui):
             "max_guests": cfg["max_guests"],
             "nightly": pr["nightly"],
             "monthly": pr["monthly"],
+            "weekly": pr.get("weekly"),
             "rules": site.prices.get("rules", {}),
         }
     data = {
@@ -730,9 +731,9 @@ def build(args):
     pub["rules_explained"] = {
         "min_stay": "units.<einheit>.min_stay Nächte; bei Anreise in rules.min_nights_months mindestens rules.winter_min_nights",
         "monthly": "ab 28 Nächten units.<einheit>.monthly.price je 30 Nächte (anteilig), gültig bis valid_until",
-        "weekly_discount": "ab rules.weekly_from_nights Nächten: rules.weekly_discount_winter % (Anreise in winter_months) sonst weekly_discount_season %",
+        "weekly_discount": "ab rules.weekly_from_nights Nächten: units.<einheit>.weekly[Monat der Anreise] = Endpreis für 7 Nächte, weitere Nächte anteilig (Preis/7); ohne weekly-Wert: rules.weekly_discount_winter % (Anreise in winter_months) sonst weekly_discount_season %",
         "extra_guests": "ab rules.extra_guest_from Gästen je Zusatzgast rules.extra_guest_fee pro Nacht; bei Monatsmiete pauschal rules.extra_guest_monthly pro 30 Nächte",
-        "cleaning": "rules.cleaning_fee einmal pro Aufenthalt",
+        "cleaning": "Reinigung ist in den Direktpreisen enthalten (rules.cleaning_included, rules.cleaning_fee = 0); alle Direktpreise sind Endpreise (Brutto)",
         "pets": "Haustiere willkommen, rules.pet_fee einmal pro Aufenthalt (nicht im Online-Richtpreis enthalten)",
         "daily_overrides": "Tagespreis ersetzt den Monatswert für diese Nacht"}
     if getattr(site, "daily", None):
