@@ -104,8 +104,11 @@ async function pick(page, unit, a, b, guests) {
 
     console.log('Mindestaufenthalt und belegte Tage');
     let s = await openBooking(browser, base, 'de');
+    await pick(s.page, 'studio', '2027-01-10', '2027-01-11', 2);
+    check('M1', await s.page.locator('#sum-hint.is-error').count() === 1 && await s.page.isDisabled('#btn-send'), 'zu kurzer Aufenthalt (1 Nacht) im Winter wurde angenommen');
+    await s.page.click('#btn-clear');
     await pick(s.page, 'studio', '2027-01-10', '2027-01-12', 2);
-    check('M1', await s.page.locator('#sum-hint.is-error').count() === 1 && await s.page.isDisabled('#btn-send'), 'zu kurzer Aufenthalt im Winter wurde angenommen');
+    check('M1b', !(await s.page.isDisabled('#btn-send')), '2 Nächte im Winter wurden abgelehnt (Mindestaufenthalt ist 2)');
     await s.page.click('#btn-clear');
     await pick(s.page, 'studio', '2027-05-30', '2027-06-02', 2);
     check('M2', await s.page.isDisabled('#btn-send'), 'Aufenthalt über die Sperre ab 01.06.2027 wurde angenommen');

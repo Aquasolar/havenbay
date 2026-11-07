@@ -36,6 +36,7 @@ jobs:
           python tests/test_sync.py
           node tests/test_app.js
           node tests/test_plausibility.js
+          node tests/test_prices.js
       - name: Tests Ebene 2 (Browser-Test mit Beispielkalender)
         if: github.event_name != 'schedule'
         run: |
