@@ -176,8 +176,8 @@
       var lead = (first.getUTCDay() + 6) % 7; // Montag zuerst
       var dim = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
       var wrap = doc.createElement('div'); wrap.className = 'cal-month';
-      var h = doc.createElement('h4'); h.textContent = monthFmt.format(first); wrap.appendChild(h);
-      var grid = doc.createElement('div'); grid.className = 'cal-grid'; grid.setAttribute('role', 'grid');
+      var h = doc.createElement('h3'); h.textContent = monthFmt.format(first); wrap.appendChild(h);
+      var grid = doc.createElement('div'); grid.className = 'cal-grid'; grid.setAttribute('role', 'group'); grid.setAttribute('aria-label', monthFmt.format(first));
       // Wochentage (2024-01-01 war ein Montag)
       for (var i = 0; i < 7; i++) {
         var d = doc.createElement('div'); d.className = 'cal-dow'; d.textContent = dowFmt.format(new Date(Date.UTC(2024, 0, 1 + i))); grid.appendChild(d);

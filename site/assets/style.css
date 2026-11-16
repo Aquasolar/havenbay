@@ -150,7 +150,7 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .cal-nav:hover { background: var(--silt); }
 .cal-nav[disabled] { opacity: 0.35; cursor: default; }
 .cal-months { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.cal-month h4 { margin: 0 0 0.5rem; text-align: center; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; text-transform: capitalize; }
+.cal-month h3 { margin: 0 0 0.5rem; text-align: center; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; text-transform: capitalize; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
 .cal-dow { text-align: center; font-size: 0.75rem; color: var(--dusk); padding: 0.2rem 0; text-transform: capitalize; }
 .cal-day { aspect-ratio: 1; min-height: 2.4rem; border: 0; background: transparent; font: inherit; font-size: 0.95rem; color: var(--lagoon); cursor: pointer; border-radius: 0.35rem; position: relative; padding: 0; }
@@ -196,7 +196,7 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .places { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.2rem; }
 .place { background: var(--white); border: 1px solid var(--silt); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
 .place .ph { aspect-ratio: 3 / 2; }
-.place .credit { display: block; padding: 0.25rem 1.1rem 0; font-size: 0.68rem; line-height: 1.3; color: #6b7a78; text-decoration: none; }
+.place .credit { display: block; padding: 0.25rem 1.1rem 0; font-size: 0.7rem; line-height: 1.3; color: #4d5c5a; text-decoration: none; }
 .place .credit:hover, .place .credit:focus-visible { text-decoration: underline; }
 .place-body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
 .place h3 { font-size: 1.15rem; margin-bottom: 0.3em; }
@@ -223,7 +223,7 @@ p { margin: 0 0 1em; max-width: 62ch; }
 .legal h2 { margin-top: 2rem; }
 .legal dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1.2rem; }
 .legal dt { color: var(--dusk); }
-.legal dd { margin: 0; }
+.legal dd { margin: 0; overflow-wrap: anywhere; min-width: 0; }
 .todo { background: #fff3c9; padding: 0 0.3rem; border-radius: 0.2rem; }
 
 /* ---------- Responsive ---------- */
